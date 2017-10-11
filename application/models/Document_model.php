@@ -10,12 +10,13 @@ class Document_model extends CI_Model {
 	}
 
 	private  $_columns  =  array(
-		    'doc_id'=>null, 
+	'doc_id'=>null, 
     'doc_serial'=>'', 
     'doc_status'=>'', 
     'doc_file'=>'', 
     'doc_datesys'=>'', 
     'doc_customer'=>'', 
+    'doc_customerTwo'=>'',
     'doc_pro_id'=>'', 
     'doc_return'=>'', 
     'doc_radicacion'=>'', 
@@ -33,7 +34,8 @@ class Document_model extends CI_Model {
     'doc_ordernumber'=>'', 
     'doc_ordertype'=>'', 
     'doc_documentdate'=>'', 
-    'doc_facturenumber'=>'', 
+    'doc_facturenumber'=>'',
+    'doc_guidenumber' =>'',
     'doc_saleorder'=>'', 
     'doc_executive'=>'', 
     'doc_monto'=>'', 
@@ -53,8 +55,7 @@ class Document_model extends CI_Model {
     'doc_datedigi'=>'', 
     'doc_causal'=>'', 
     'doc_responsible'=>'',
-    'doc_nameproviderOne'=>'',
-    'doc_nameproviderTwo'=>'',
+    'doc_datedigrecepcionfac'=>''
 	);
 	protected static $_table = 'rrf_document';
 	
@@ -107,12 +108,23 @@ class Document_model extends CI_Model {
 		}
 		return $result;
 	}
+	 public function findByFolio($folio = null){
+		$folio                  = intval($folio);
+		$this->load->database();
+		$res                 = $this->db->get_where(self::$_table,array('doc_serial' =>$folio));
+		$result              = null;
+		if ($res->num_rows() == 1) {
+			$result              = $this->create($res->row_object());
+		}
+		
+		return $result;
+	}
 	public function get($attr){
 			return $this->_columns[$attr];
 	}
 
 	public function create($row){
-		$user =  new User_model();
+		$user =  new Document_model();
 		$user->setColumns($row);
 		return $user;
     }
@@ -127,6 +139,7 @@ class Document_model extends CI_Model {
 				$this->db->where('doc_id',$this->_columns['doc_id']);
 				$this->db->update(self::$_table,$this->_columns);
 			}
+			
 		} catch (Exception $e) {
 			echo"se produjo una excepcion del tipo".$e->getMessage() ;
 		}
@@ -136,6 +149,8 @@ class Document_model extends CI_Model {
 	{
 		return get_object_vars($this);
 	}
+
+
 
 }
 

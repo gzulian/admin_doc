@@ -5422,11 +5422,11 @@ i {
 /* line 58, /home/andrei/core-admin-release/core-admin/source/stylesheets/base.scss */
 .main-content {
   position: relative;
-  margin-left: 201px; }
+  margin-left: 0px; }
 
 /* line 63, /home/andrei/core-admin-release/core-admin/source/stylesheets/base.scss */
 .padded {
-  padding: 15px; }
+  padding: 10px; }
 
 /* line 67, /home/andrei/core-admin-release/core-admin/source/stylesheets/base.scss */
 .nopadding {

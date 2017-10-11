@@ -55,7 +55,9 @@
       });
     });
     $('.datepicker').datepicker({
-      todayBtn: true
+      format: 'yyyy-mm-dd',
+      todayBtn: true,
+
     });
     $('.tags').tagsInput({
       width: '100%'
@@ -84,11 +86,11 @@
       sDom: "<\"table-header\"fl>t<\"table-footer\"ip>"
     });
     $(".dTable-small").dataTable({
-      iDisplayLength: 5,
-      bJQueryUI: false,
-      bAutoWidth: false,
-      sPaginationType: "full_numbers",
-      sDom: "<\"table-header\"fl>t<\"table-footer\"ip>"
+        iDisplayLength: 5,
+        bJQueryUI: false,
+        bAutoWidth: false,
+        sPaginationType: "full_numbers",
+        sDom: "<\"table-header\"fl>t<\"table-footer\"ip>"
     });
     $("select.uniform, input:file, .dataTables_length select").uniform();
     $(".core-animate-bars .box-toolbar a").click(function(e) {

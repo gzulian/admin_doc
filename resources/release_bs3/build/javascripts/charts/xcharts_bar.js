@@ -7,8 +7,8 @@ $(function () {
         };
 
         data.main = []
-        var foods = $(["Beef", "Ham", "Bacon"]);
-        $([1,2,3]).each(function(){
+        var foods = $(["Facturas", "Guías", "Facturas pendientes","Guías pendientes","Monto ($)"]);
+        $([1,2,3,4,5]).each(function(){
 
             var graphData = []
 
