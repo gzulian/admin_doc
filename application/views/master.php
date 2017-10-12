@@ -40,6 +40,20 @@
   </div>
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-collapse-top">
+    <ul class=" nav navbar-nav navbar-left">
+      <li class="cdrop active">&nbsp;&nbsp;&nbsp;&nbsp;</li>
+      <li class="cdrop "><a href="<?=site_url('Dashboard')?>"><span class="icon-dashboard icon-1x"></span> Dashboard</a></li>
+
+      <li class="dropdown ">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentos <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="<?=site_url('document/index')?>">Registro de documentos</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Filtros</a></li>
+        </ul>
+        <li class=""><a href="<?=site_url('user/index')?>">Usuarios</a></li>
+      </li>
+    </ul>
     <div class="navbar-right">
       <ul class="nav navbar-nav navbar-left">
         <li class="dropdown">

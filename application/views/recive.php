@@ -6,11 +6,11 @@
         <div class="pull-left header">
           <h3 class="title">
             <i class="icon-file"></i>
-            Facturas
+            Dcumentos
           </h3>
           <h5>
             <span>
-              Recepción
+              Registro
             </span>
           </h5>
         </div>
@@ -58,6 +58,7 @@
               </ul >
             </form>
              <div class="row">
+
               <div id="result" class="col-md-12" style="display: none; height: 500px;  overflow-y:scroll;" >
                 <table id="dataTables" class=" responsive ">
                    <thead>
@@ -76,254 +77,259 @@
       </div>
 
       <div class="col-md-8">
+
         <div class="box">
           <div class="box-header">
+            <ul class="nav nav-tabs nav-tabs-left">
+              <li class="active"><a href="#detail" data-toggle="tab"><i class="icon-file"></i> <span>Detalle de documento</span></a></li>
+              <li><a href="#trazability" data-toggle="tab"><i class="icon-cog"></i> <span>Trazabilidad</span></a></li>
+            </ul>
             <div class="title">Documento: <i id="sectionFolio"><input type="text"  disabled="disabled" name="document[doc_serial]"></i></div>
           </div>
           <div class="box-content padded">
-           <div class="row">
-              <div class="col-md-12">  
-                <div class="accordion" id="accordion1">
-                  <div class="accordion-group">
-                    <div class="accordion-heading">
-                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                        Actualización de datos
-                      </a>
-                    </div>
-                    <div id="collapseTwo" class="accordion-body collapse ">
-                      <div class="accordion-inner padded">
-                        <form action="#" id="recive" method="post" accept-charset="utf-8" class="form-horizontal">
-                            <div class="form-group">
-                              <label class="control-label col-lg-2">Retorno</label>
-                              <div class="col-lg-4">
-                                <input type="text" name="document[doc_return]" class="form-control" />
-                              </div>
-                              <label class="control-label col-lg-2">A radicación:</label>
-                              <div class="col-lg-4">
-                                <input type="radio" class="" id="r1" value="SI" name="document[doc_radicacion]">SI
+            <div class="tab-content ">
+              <div class="tab-pane active" id="detail">
+                <div class="row">
+                  <div class="col-md-12">  
+                    <div class="accordion" id="accordion1">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                            Actualización de datos
+                          </a>
+                        </div>
+                        <div id="collapseTwo" class="accordion-body collapse ">
+                          <div class="accordion-inner padded">
+                            <form action="#" id="recive" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <div class="form-group">
+                                  <label class="control-label col-lg-2">Retorno</label>
+                                  <div class="col-lg-4">
+                                    <input type="text" name="document[doc_return]" class="form-control" />
+                                  </div>
+                                  <label class="control-label col-lg-2">A radicación:</label>
+                                  <div class="col-lg-4">
+                                    <input type="radio" class="" id="r1" value="SI" name="document[doc_radicacion]">SI
 
-                                <input type="radio" class="" id="r2" value="NO" name="document[doc_radicacion]">NO
-                              </div>
-                            </div>
-                            <ul class="separate-sections">
-                              <li class="input">
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Fecha entrega logistica a SAC</label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_fsac]" />  
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Fecha entrega a radicación</label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_fradicacion]" />
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Fecha digitalización guía </label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_guidedate]" />
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Fecha digi. factura recep. por cliente</label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_facdate]" />
+                                    <input type="radio" class="" id="r2" value="NO" name="document[doc_radicacion]">NO
                                   </div>
                                 </div>
-                                
-                              </li>
-                            </ul>
+                                <ul class="separate-sections">
+                                  <li class="input">
+                                    <div class="row">
+                                      <div class="col-md-3">
+                                        <label class="control-label ">Fecha entrega logistica a SAC</label>
+                                        <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_fsac]" />  
+                                      </div>
+                                      <div class="col-md-3">
+                                        <label class="control-label ">Fecha entrega a radicación</label>
+                                        <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_fradicacion]" />
+                                      </div>
+                                      <div class="col-md-3">
+                                        <label class="control-label ">Fecha digitalización guía </label>
+                                        <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_guidedate]" />
+                                      </div>
+                                      <div class="col-md-3">
+                                        <label class="control-label ">Fecha digi. factura recep. por cliente</label>
+                                        <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_facdate]" />
+                                      </div>
+                                    </div>
+                                    
+                                  </li>
+                                </ul>
 
-                      
-                            <div class="row">
-                              <div class="col-md-6">
-                                <label class="control-label ">Observación  Bodega </label>
-                                <textarea class="form-control"  name="document[doc_obsbodega]"></textarea>
-                              </div>
-                              <div class="col-md-6">
-                                <label class="control-label ">Observación  SAC</label>
-                                <textarea class="form-control"  name="document[doc_obssac]" ></textarea>
-                              </div>
-                            </div>
-                            <br/>
-                            <fieldset>
-                              <legend><h5>TLS</h5></legend>
-                            <div class="row">
-                              <div class="col-md-3">
-                              <label class="control-label">Fecha entrega TLS</label>
-                              </div>
-                              <div class="col-md-3">
-                                <input type="text" class="datepicker form-control"  name="document[doc_ftls]" />
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6">
-                                
-                                <label class="control-label ">Observación  TLS 1 </label>
-                                <textarea class="form-control"  name="document[doc_obstls1]"></textarea>
-                              </div>
-                              <div class="col-md-6">
-                                <label class="control-label ">Observación  TLS 2 </label>
-                                <textarea class="form-control"  name="document[doc_obstls2]" ></textarea>
-                              </div>
-                            </div>
-                            </fieldset>
-                            <br/>
-                            <div class="row">
-                              <div class="col-md-12">
-                                <button type="submit" class="pull-right btn btn-green btn-lg"><i class="icon-save">  </i>Guardar</button>
-                              </div>
-                            </div>
-
-                             <input type="hidden" class=""  name="document[doc_pro_id]" />
-                             <input type="hidden" class=""  name="document[doc_id]" />
-                             <input type="hidden" class=""  name="document[doc_serial]" />
-                             
-
-                            
                           
-                        </form>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <label class="control-label ">Observación  Bodega </label>
+                                    <textarea class="form-control"  name="document[doc_obsbodega]"></textarea>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label class="control-label ">Observación  SAC</label>
+                                    <textarea class="form-control"  name="document[doc_obssac]" ></textarea>
+                                  </div>
+                                </div>
+                                <br/>
+                                <fieldset>
+                                  <legend><h5>TLS</h5></legend>
+                                <div class="row">
+                                  <div class="col-md-3">
+                                  <label class="control-label">Fecha entrega TLS</label>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <input type="text" class="datepicker form-control"  name="document[doc_ftls]" />
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    
+                                    <label class="control-label ">Observación  TLS 1 </label>
+                                    <textarea class="form-control"  name="document[doc_obstls1]"></textarea>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label class="control-label ">Observación  TLS 2 </label>
+                                    <textarea class="form-control"  name="document[doc_obstls2]" ></textarea>
+                                  </div>
+                                </div>
+                                </fieldset>
+                                <br/>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <button type="submit" class="pull-right btn btn-green btn-lg"><i class="icon-save">  </i>Guardar</button>
+                                  </div>
+                                </div>
+
+                                 <input type="hidden" class=""  name="document[doc_pro_id]" />
+                                 <input type="hidden" class=""  name="document[doc_id]" />
+                                 <input type="hidden" class=""  name="document[doc_serial]" />
+                            </form>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="accordion" id="accordion2">
-                  <div class="accordion-group">
-                    <div class="accordion-heading">
-                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                        Datos generales
-                      </a>
-                    </div>
-                    <div id="collapseOne" class="accordion-body collapse ">
-                      <div class="accordion-inner padded">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">Mes: </label>
-                            <span id="doc_month"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Ciudad: </label>
-                            <span id="doc_city"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Número de orden: </label>
-                            <span id="doc_ordernumber"></span>
-                          </div>
-                           <div class="col-md-3">
-                            <label class="control-label">Tipo de orden: </label>
-                            <span id="doc_ordertype"></span>
-                          </div>
+                    <div class="accordion" id="accordion2">
+                      <div class="accordion-group">
+                        <div class="accordion-heading">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                            Datos generales
+                          </a>
                         </div>
-                        <br/>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">Nombre cliente 1: </label>
-                            <span id="doc_customer"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Nombre cliente 2: </label>
-                            <span id="doc_customerTwo"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Fecha: </label>
-                            <span id="doc_documentdate"></span>
-                          </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">N° de factura: </label>
-                            <span id="doc_facturenumber"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">N° de guía: </label>
-                            <span id="doc_guidenumber"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">N° Orden de compra: </label>
-                            <span id="doc_saleorder"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Ejecutivo: </label>
-                            <span id="doc_executive"></span>
-                          </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                          <div class="col-md-3">
-                              <label class="control-label">Monto ($): </label>
-                              <span id="doc_monto"></span>
-                          </div>
-                          <div class="col-md-3">
-                              <label class="control-label">Monto (usd): </label>
-                              <span id="doc_montousd"></span>
-                          </div>
-                          <div class="col-md-3">
-                              <label class="control-label">Transportista: </label>
-                              <span id="doc_transport"></span>
-                          </div>
-                          <div class="col-md-3">
-                              <label class="control-label">Almacen: </label>
-                              <span id="doc_depot"></span>
-                          </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">Fecha estimada factura de log a sac: </label>
-                            <span id="doc_datelogtosac"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Días de retorno logistica: </label>
-                            <span id="doc_daylogic"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Status logistica: </label>
-                            <span id="doc_logicstatus"></span>
-                          </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">Fecha estimada factura de TLS: </label>
-                            <span id="doc_datetls"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Días de confirmación SETS: </label>
-                            <span id="doc_daysets"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Status SAC: </label>
-                            <span id="doc_statussac"></span>
-                          </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">Fecha estimada factura radicación: </label>
-                            <span id="doc_dateradicacion"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Días de confirmación TLS: </label>
-                            <span id="doc_daytls"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Status FASTCO: </label>
-                            <span id="doc_statusfastco"></span>
-                          </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">Fecha radicación factura: </label>
-                            <span id="doc_dateradicacionfact"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Fecha digitalazación factura cliente: </label>
-                            <span id="doc_datedigi"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Causal: </label>
-                            <span id="doc_causal"></span>
-                          </div>
-                          <div class="col-md-3">
-                            <label class="control-label">Responsable: </label>
-                            <span id="doc_responsible"></span>
+                        <div id="collapseOne" class="accordion-body collapse ">
+                          <div class="accordion-inner padded">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label class="control-label">Mes: </label>
+                                <span id="doc_month"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Ciudad: </label>
+                                <span id="doc_city"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Número de orden: </label>
+                                <span id="doc_ordernumber"></span>
+                              </div>
+                               <div class="col-md-3">
+                                <label class="control-label">Tipo de orden: </label>
+                                <span id="doc_ordertype"></span>
+                              </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label class="control-label">Nombre cliente 1: </label>
+                                <span id="doc_customer"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Nombre cliente 2: </label>
+                                <span id="doc_customerTwo"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Fecha: </label>
+                                <span id="doc_documentdate"></span>
+                              </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label class="control-label">N° de factura: </label>
+                                <span id="doc_facturenumber"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">N° de guía: </label>
+                                <span id="doc_guidenumber"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">N° Orden de compra: </label>
+                                <span id="doc_saleorder"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Ejecutivo: </label>
+                                <span id="doc_executive"></span>
+                              </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-md-3">
+                                  <label class="control-label">Monto ($): </label>
+                                  <span id="doc_monto"></span>
+                              </div>
+                              <div class="col-md-3">
+                                  <label class="control-label">Monto (usd): </label>
+                                  <span id="doc_montousd"></span>
+                              </div>
+                              <div class="col-md-3">
+                                  <label class="control-label">Transportista: </label>
+                                  <span id="doc_transport"></span>
+                              </div>
+                              <div class="col-md-3">
+                                  <label class="control-label">Almacen: </label>
+                                  <span id="doc_depot"></span>
+                              </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label class="control-label">Fecha estimada factura de log a sac: </label>
+                                <span id="doc_datelogtosac"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Días de retorno logistica: </label>
+                                <span id="doc_daylogic"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Status logistica: </label>
+                                <span id="doc_logicstatus"></span>
+                              </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label class="control-label">Fecha estimada factura de TLS: </label>
+                                <span id="doc_datetls"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Días de confirmación SETS: </label>
+                                <span id="doc_daysets"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Status SAC: </label>
+                                <span id="doc_statussac"></span>
+                              </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label class="control-label">Fecha estimada factura radicación: </label>
+                                <span id="doc_dateradicacion"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Días de confirmación TLS: </label>
+                                <span id="doc_daytls"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Status FASTCO: </label>
+                                <span id="doc_statusfastco"></span>
+                              </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label class="control-label">Fecha radicación factura: </label>
+                                <span id="doc_dateradicacionfact"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Fecha digitalazación factura cliente: </label>
+                                <span id="doc_datedigi"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Causal: </label>
+                                <span id="doc_causal"></span>
+                              </div>
+                              <div class="col-md-3">
+                                <label class="control-label">Responsable: </label>
+                                <span id="doc_responsible"></span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -331,8 +337,32 @@
                   </div>
                 </div>
               </div>
-           </div>
-          </div>
+              <div class="tab-pane" id="trazability">
+                <div class="box-header">
+          
+                </div>
+                <div class="box-content padded">
+                 <table class="table table-responsive table-hover">
+                   <caption>Historial de estados</caption>
+                   <thead>
+                     <tr>
+                       <th>Evento</th>
+                       <th>Fecha</th>
+                       <th>Observación</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     <tr>
+                       <td>data</td>
+                       <td>data</td>
+                       <td>data</td>
+                     </tr>
+                   </tbody>
+                 </table>
+                </div>
+              </div>
+            </div>  
+          </div>  
         </div>
       </div>
     </div>

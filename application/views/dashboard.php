@@ -9,34 +9,9 @@
   <div class="container">
     <div class="row">
 
-      <div class="area-top clearfix">
-        <div class="pull-left header">
-          <h3 class="title">
-            <i class="icon-dashboard"></i>
-            Dashboard
-          </h3>
-          <h5>
-            <span>
-              Documentos
-            </span>
-          </h5>
-        </div>
-        <ul class="list-inline pull-right sparkline-box">
-          <li class="sparkline-row">
-            <h4 class="blue"><span>Pendientes</span> 847</h4>
-            <div class="sparkline big" data-color="blue"><!--25,11,5,28,25--></div>
-          </li>
-          <li class="sparkline-row">
-            <h4 class="green"><span>Recepcionadas</span> 223</h4>
-            <div class="sparkline big" data-color="green"><!-- a 28,26,13,18,8,6,24,19,3,6,19,6--></div>
-          </li>
-          <li class="sparkline-row">
-            <h4 class="red"><span>Totales</span> 7930</h4>
-            <div class="sparkline big"><!--16,23,28,8,12,9,25,11,16,16,17,13--></div>
-          </li>
-        </ul>
-      </div>
+      
     </div>
+    <br>
   </div>
   <div class="container">
     <div class="row">
@@ -49,15 +24,7 @@
             <form action="#" method="post" accept-charset="utf-8" class=" fill-up">
               <ul class="separate-sections">
                 <li class="input">
-                  <input name="filter[provider]" type="text" class="form-control" placeholder="Nombre del proveedor"  class="" />
-                </li>
-                <li class="input">
-                  <select class="chzn-select" name="filter[datetype] " >
-                    <option value="f1">Fecha Entrega logistica a SAC</option>
-                    <option value="f2">Fecha de entrega de radicación</option>
-                    <option value="f3">Fecha de digitalización Guía</option>
-                    <option value="f4">Fecha de digitalización factura recepcionada cliente</option>
-                  </select>
+                  <input name="filter[provider]" type="text" class="form-control" placeholder="Nombre del cliente"  class="" />
                 </li>
                 <li>
                   <div class="row">
@@ -75,27 +42,110 @@
                 </li>
 
               </ul>
-
             </form>
-            <div class="row">
-         
-              <div class="col-md-12" style="height: 500px;  overflow-y:scroll;" >
-                <table id="dataTables" class=" responsive ">
-                   <thead>
-                     <th>Folio</th>   
-                     <th>Proveedor</th>   
-                     <th>Fecha</th>   
-                   </thead>
+          </div>
+        </div>  
+         <div class="box">
+          <div class="box-header">
+            <div class="title">Estado Documentos</div>
+          </div>
+          <div class="box-content padded">
+            <table class="table table-responsive">
+              <thead>
+                <tr>
+                  <th>Estado</th>
+                  <th>Facturas</th>
+                  <th>N. Crédito</th>
+                  <th>N. Débito</th>
+                  <th>Guías</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Generadas</b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 30</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 31</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 34</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 35</a></b></td>
+                </tr>
+                <tr>
+                  <td><b>Digitalizadas</b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 30</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 31</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 34</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 35</a></b></td>
+                </tr>
+                <tr>
+                  <td><b>Pendientes</b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 30</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 31</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 34</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 35</a></b></td>
+                </tr>
+                <tr>
+                  <td><b>Vencidos</b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 30</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 31</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 34</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 35</a></b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>  
+        <div class="box">
+          <div class="box-header">
+            <div class="title">Consulta de documentos</div>
+          </div>
+          <div class="box-content ">
+          <table class="table table-responsive">
+              <thead>
+                <tr>
+                  <th>Estado</th>
+                  <th>Facturas</th>
+                  <th>N. Crédito</th>
+                  <th>N. Débito</th>
+                  <th>Guías</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Pendientes</b></td>
+                    <td><b><a href="<?=site_url('document/filter')?>"> 30</a></b></td>
+                    <td><b><a href="<?=site_url('document/filter')?>"> 31</a></b></td>
+                    <td><b><a href="<?=site_url('document/filter')?>"> 34</a></b></td>
+                    <td><b><a href="<?=site_url('document/filter')?>"> 35</a></b></td>
+                </tr>
+                <tr>
+                  <td><b>Monto $</b></td>
+                   <td><b><a href="<?=site_url('document/filter')?>"> 500</a></b></td>
+                   <td><b><a href="<?=site_url('document/filter')?>"> 33.333.111</a></b></td>
+                   <td><b><a href="<?=site_url('document/filter')?>"> 33.333.111</a></b></td>
+                   <td><b><a href="<?=site_url('document/filter')?>"> 33.333.111</a></b></td>
                    
-                </table>
-              </div>
-           
+                  
+                </tr>
+                <tr>
+                  <td><b>Vencidos</b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 31</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 34</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 35</a></b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 35</a></b></td>
+                </tr>
+                <tr>
+                  <td><b>Monto $</b></td>
+                  <td><b><a href="<?=site_url('document/filter')?>"> 33.333.111</a></b></td>
+                   <td><b><a href="<?=site_url('document/filter')?>"> 33.333.111</a></b></td>
+                   <td><b><a href="<?=site_url('document/filter')?>"> 33.333.111</a></b></td>
+                   <td><b><a href="<?=site_url('document/filter')?>"> 33.333.111</a></b></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          </div>
-          
-        </div>
+        </div>  
+        
+        
       </div>
-
       <div class="col-md-8">
         <div class="box">
           <div class="box-header">
@@ -144,24 +194,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js" type="text/javascript" ></script>
 
 <script>
- var table  = $("#dataTables").DataTable( {"oLanguage": {
-        "sLengthMenu": "Mostrar _MENU_ registros por página",
-        "sZeroRecords": "Sin resultados",
-        "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-        "sInfoEmpty": "",
-        "sInfoFiltered": "(Filtrando from _MAX_ total registros)",
-        "sSearch":"Buscar",
-        "oPaginate": {
-        "sFirst":      "Primera",
-        "sLast":       "Última",
-        "sNext":       "Sig",
-        "sPrevious":   "Anteriror"
-        }
-      },iDisplayLength: 5,
-        bJQueryUI: false,
-        bAutoWidth: false,
-        sPaginationType: "full_numbers",
-        sDom: "<\"table-header\"fl>t<\"table-footer\"ip>"});
+
 
 var ctx = document.getElementById("canvas").getContext('2d');
 
