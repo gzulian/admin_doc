@@ -1,59 +1,61 @@
-<!doctype html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
-  <meta charset="utf-8">
-  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-  <title>RRF</title>
-  <link href="<?=base_url('resources/release_bs3/build/stylesheets/application.css')?> " media="screen" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <a class="navbar-brand" href="#">Registro de recepción de Facturas</a>
-  </div>
-</nav>
-<div class="container">
-<div class="col-md-4 col-md-offset-4">
-  <div class="padded">
-    <div class="login box" style="margin-top: 80px;">
-      <div class="box-header">
-        <span class="title">Ingreso</span>
-      </div>
-      <div class="box-content padded">
-        <form class="separate-sections" action="<?=site_url('login/index');?>" method="post">
-          <div class="input-group addon-left">
-            <span class="input-group-addon" >
-              <i class="icon-user"></i>
-            </span>
-            <input type="text" name="user" placeholder="Su email: ejemplo@ejemplo.cl">
-          </div>
-          <div class="input-group addon-left">
-            <span class="input-group-addon" >
-              <i class="icon-key"></i>
-            </span>
-            <input type="password" name="password" placeholder="Su clave">
-          </div>
-          <div>
-            <?php if(isset($error)): ?>
-              <i class="icon-warning-sign"><?=$error?></i>
-            <?php endif ?>
-            <button type="submit" class="btn btn-blue btn-block">
-                Ingresar <i class="icon-signin"></i>
-            </button>
-          </div>
-        </form>
-        <div>
-          <!-- a href="sign_up.html">
-              Don't have an account? <strong>Sign Up</strong>
-          </a-- >
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administración| BAXTER </title>
+    <link type="image/png" rel="icon" href="<?=base_url('resources/images/baxter_icon_32x32.png')?>" sizes="32x32">
+
+    <!-- Bootstrap -->
+    <link href="<?=base_url('resources/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="<?=base_url('resources/vendors/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="<?=base_url('resources/build/css/custom.min.css')?>" rel="stylesheet">
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form action="<?=site_url('login/index')?>" method="post">
+              <h1>Bienvenido</h1>
+              <div>
+                <input type="text" name="user" class="form-control" placeholder="Usuario" required="" />
+              </div>
+              <div>
+                <input type="password" name="password" class="form-control" placeholder="Clave" required="" />
+              </div>
+              <div>
+                <button type="submit" class="btn btn-default submit" >Ingresar</button>
+              </div>
+<?php if (isset($error)):?>
+                <i class="icon-warning-sign"><?=$error?></i>
+<?php endif?>
+              <div class="clearfix"></div>
+
+              <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1> <img width="100px" src="<?=base_url('resources/images/logo.png')?>"></h1>
+                  <p>Administración de documentos</p>
+                </div>
+              </div>
+            </form>
+          </section>
         </div>
       </div>
     </div>
-  </div>
-</div>
-</div>
-</body>
+  </body>
 </html>

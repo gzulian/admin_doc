@@ -43,16 +43,19 @@
     <ul class=" nav navbar-nav navbar-left">
       <li class="cdrop active">&nbsp;&nbsp;&nbsp;&nbsp;</li>
       <li class="cdrop "><a href="<?=site_url('Dashboard')?>"><span class="icon-dashboard icon-1x"></span> Dashboard</a></li>
-
-      <li class="dropdown ">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentos <b class="caret"></b></a>
+      <li><a href="<?=site_url('document/index')?>" class=""><span class="icon-file icon-1x"></span> Documentos</b></a></li>      
+      <li class="dropdown cdrop">
+         <a href="#" class="dropdown-toggle dropdown-avatar " data-toggle="dropdown"><span class="glyphicon-filter icon-2x"></span>Reportes<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="<?=site_url('document/index')?>">Registro de documentos</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Filtros</a></li>
+            <li><a href="<?=site_url('report/status')?>"> Estado de pago de documentos</a></li>
+            <li class="divider"></li>
+            <li><a href="<?=site_url('report/motive')?>"> Causal de documentos pendientes</a></li>
+            <li class="divider"></li>
+            <li><a href="<?=site_url('report/returnDoc')?>"> Retorno de documentos</a></li>
+            <li class="divider"></li>
         </ul>
-        <li class=""><a href="<?=site_url('user/index')?>">Usuarios</a></li>
       </li>
+      <!--li class=""><a href="<?//=site_url('user/index')?>"><span class="icon-group icon-1x"></span> Usuarios</a></li-->  
     </ul>
     <div class="navbar-right">
       <ul class="nav navbar-nav navbar-left">

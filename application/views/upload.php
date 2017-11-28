@@ -1,51 +1,38 @@
-
-<div class="main-content">
-  <div class="container">
-    <div class="row">
-
-      <div class="area-top clearfix">
-        <div class="pull-left header">
-          <h3 class="title">
-            <i class="icon-upload"></i>
-            Carga masiva de facturas
-          </h3>
-          <h5>
-            <span>
-              Facturas
-            </span>
-          </h5>
-        </div>
-      </div>
+<div class="right_col" role="main">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Carga masiva</h3>
     </div>
   </div>
-  <div class="container">
+  <div class="clearfix"></div>
+
     <div class="row">
       <div class="col-md-3">
-        <div class="box">
-          <div class="box-header">
+        <div class="x_panel">
+          <div class="x_title">
             <div class="title">Cargar Archivo <i id="sectionFolio"></i></div>
           </div>
-          <div class="box-content padded">
-           
-              <?php if (isset($errors)): ?>
-              <?php foreach ($errors as $key => $value): ?>
+          <div class="x_content padded">
+
+<?php if (isset($errors)):?>
+              <?php foreach ($errors as $key => $value):?>
                   <div class="alert alert-info"><span class="icon-warning-sign "></span><?=$value?></div>
-              <?php endforeach ?>
-              <?php endif ?>
-              <form  id="form" name="form" action="<?=site_url('document/uploadAjax');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">  
+<?php endforeach?>
+              <?php endif?>
+              <form  id="form" name="form" action="<?=site_url('document/uploadAjax');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                 <div class="row">
-                  <div class="col-md-12">  
+                  <div class="col-md-12">
                      <label class="control-label">Archivo</label>
                       <input accept=".xls,.xlsx,.csv" type="file" class="file" name="file">
                   </div>
                 </div>
                 <br/>
                 <div class="row">
-                  <div class="col-md-9">  
+                  <div class="col-md-9">
                       <button  id="sub" class="pull-right  btn btn-green" type="submit"><i class="icon-upload"></i> Cargar</button>
                   </div>
                   <div class="col-md-3">
-                    
+
                     <div class="progress " style="height: 25px !important ">
                       <div  id="progressBar" class="progress-bar progress-blue tip bar" title="0" data-percent="0" style="width: 0%"><span class="sr-only percent"> 0% Complete</span></div>
                     </div>
@@ -54,20 +41,20 @@
                   </div>
                 </div>
               </form>
-              <div id="errors">  
+              <div id="errors">
               </div>
           </div>
         </div>
       </div>
       <div class="col-md-9">
-        <div class="box">
-          <div class="box-header">
+        <div class="x_panel">
+          <div class="x_title">
             <div class="title">Documentos cargados<i id="sectionFolio"></i></div>
           </div>
-           <div class="box-content padded">
+           <div class="x_content padded">
             <div class="row">
-              <div class="col-md-12">  
-                <table id="table" class=" responsive">
+              <div class="col-md-12">
+                <table id="table" class=" table-striped table table-responsive">
                   <thead>
                     <tr>
                       <th>Folio</th>
@@ -82,7 +69,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    
+
                   </tbody>
                 </table>
               </div>
@@ -125,13 +112,13 @@
         "sNext":       "Sig",
         "sPrevious":   "Anteriror"
         }
-      },iDisplayLength: 5,
+      },iDisplayLength: 20,
         bJQueryUI: false,
         bAutoWidth: false,
         sPaginationType: "full_numbers",
         sDom: "<\"table-header\"fl>t<\"table-footer\"ip>"});
-   
-    
+
+
     $('form').ajaxForm({
 
         beforeSend: function() {
@@ -179,7 +166,7 @@
     $(".alert-info").fadeTo(2000, 500).slideUp(500, function(){
     $(".alert-info").slideUp(500);
 });
-}); 
+});
 
 
 </script>
