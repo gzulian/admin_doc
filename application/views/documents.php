@@ -350,12 +350,40 @@
                                     <textarea class="form-control"  name="formData[doc_obstls2]" ></textarea>
                                   </td>
                                 </tr>
+                                <tr>
+                                  <th class=""></th>
+                                  <td class="text-right" >
+                                    <button class="receiveAction btn btn-primary" type="submit" ><span class="glyphicon glyphicon-fast-backward "></span> Retornar</button>
+                                  </td>
+                                </tr>
                               </tbody>
                             </table>
                             </form>
                           </div>
                           <div class="tab-pane" id="level4">
+                            <form action="#" id="digiForm" method="post" accept-charset="utf-8" class="action form-horizontal">
+                            <div class="clearfix"></div>
+                            <table class="table  table-responsive">
+                              <thead>
 
+                              </thead>
+                              <tbody class="buscar">
+                                <tr>
+                                  <th class="">Fecha digi. Factura Recepcionada por cliente: </th>
+                                  <td class="text-right" >
+                                    <input type="text" class="datepicker form-control"  name="formData[doc_ftls]" />
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th class="">Fecha digitalización guía:</th>
+                                  <td class="text-right" >
+                                    <span id=""></span>
+                                  </td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+                            </form>
                           </div>
                         </div>
                       </div>
