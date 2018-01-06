@@ -4,8 +4,8 @@
      <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Administración| BAXTER </title>
-    <link type="image/png" rel="icon" href="<?=base_url('resources/images/baxter_icon_32x32.png')?>" sizes="32x32">
+    <title>Administración| TLS  Servicios</title>
+    <!-- link type="image/png" rel="icon" href="<?//=base_url('resources/images/baxter_icon_32x32.png')?>" sizes="32x32"-->
 
     <!-- Bootstrap -->
     <link href="<?=base_url('resources/vendors/bootstrap/dist/css/bootstrap.min.css')?>" rel="stylesheet">
@@ -27,7 +27,9 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form action="<?=site_url('login/index')?>" method="post">
-              <h1>Bienvenido</h1>
+              <h2>Gestión del proceso documental</h2>
+                  <h1> <img width="100px" src="<?=base_url('resources/images/logo.png')?>"></h1>
+
               <div>
                 <input type="text" name="user" class="form-control" placeholder="Usuario" required="" />
               </div>
@@ -48,8 +50,8 @@
                 <br />
 
                 <div>
-                  <h1> <img width="100px" src="<?=base_url('resources/images/logo.png')?>"></h1>
-                  <p>Administración de documentos</p>
+                  <h1>TLS</h1>
+                  <p>Servicios</p>
                 </div>
               </div>
             </form>

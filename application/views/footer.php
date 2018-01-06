@@ -1,6 +1,6 @@
 <footer class="">
           <div class="pull-right">
-            BAXTER - Administración de documentos
+            TLS Servicios - Administración de documentos
           </div>
           <div class="clearfix"></div>
         </footer>

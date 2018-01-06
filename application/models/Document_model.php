@@ -65,17 +65,59 @@ class Document_model extends CI_Model {
 		'doc_causal'              => '',
 		'doc_responsible'         => '',
 		'doc_datedigrecepcionfac' => '',
+		'doc_carrier'             => '',
+		'doc_datelogtosacstimated'=> ''
 	);
 	protected static $_table = 'rrf_document';
 	public static $_datetype = array('doc_datelogtosac', 'doc_dateradicacion', 'doc_datedigi', 'doc_datedigrecepcionfac');
-
-	public static $type = array("Factura" => array(), "Nota de Crédito" => array(), "Nota de Débito" => array());
-
+	public  static $orderType = array('C01','C02','C03','C04','C05','C06','C07','C08','C09','C10','C11','C12','C16','ISLA DE PASCUA');
+	public static $type   = array("Factura" => array(), "Nota de Crédito" => array(), "Nota de Débito" => array(), "G. Despacho" => array());
+	public static $status = array(0         => "Cargado", 1         => "Recepcionado", 2         => "Radicado", 3         => "Retornado", 4         => "Digitalizado", 5         => "Retornado fuera de plazo");
 	public function findAll($where = array(), $json = false) {
 		$this->load->database();
 		$result = null;
-		$this->db->limit(10);
-		$res = $this->db->get_where(self::$_table, $where);
+		//$this->db->limit(10);
+		$this->db->order_by('doc_documentdate', 'asc');
+		$res = $this->db->get_where(self::$_table, $where, false);
+
+		if ($res->num_rows() > 0) {
+			if ($json) {
+				foreach ($res->result() as $value) {
+					$result[] = json_encode($value);
+				}
+			} else {
+				foreach ($res->result() as $value) {
+					$result[] = $this->create($value);
+				}
+			}
+		}
+		return $result;
+	}
+	public function findAllIn($where = array(), $json = false) {
+		$this->load->database();
+		$result = null;
+		//$this->db->limit(10);
+		$this->db->select('rrf_document.*');
+		$this->db->from(self::$_table);
+		$this->db->where_in('doc_status', $where);
+
+		if (in_array(0, $where)) {
+			$this->db->order_by('doc_documentdate', 'asc');
+		} elseif (in_array(1, $where)) {
+			$this->db->order_by('doc_datelogtosac', 'asc');
+
+		} elseif (in_array(2, $where)) {
+			$this->db->order_by('doc_fradicacion', 'asc');
+
+		} elseif (in_array(3, $where) || in_array(5, $where)) {
+			$this->db->order_by('doc_datetls', 'asc');
+
+		} elseif (in_array(4, $where) || in_array(5, $where)) {
+			$this->db->order_by('doc_datedigrecepcionfac', 'asc');
+
+		}
+
+		$res = $this->db->get();
 		if ($res->num_rows() > 0) {
 			if ($json) {
 				foreach ($res->result() as $value) {
@@ -128,10 +170,16 @@ class Document_model extends CI_Model {
 	public function findByFolio($folio = null) {
 		$folio = intval($folio);
 		$this->load->database();
-		$res    = $this->db->get_where(self::$_table, array('doc_serial' => $folio));
+		$res    = $this->db->get_where(self::$_table, array('doc_ordernumber' => $folio));
 		$result = null;
 		if ($res->num_rows() == 1) {
 			$result = $this->create($res->row_object());
+		} else {
+			$res    = $this->db->get_where(self::$_table, array('doc_salenumber' => $folio));
+			$result = null;
+			if ($res->num_rows() == 1) {
+				$result = $this->create($res->row_object());
+			}
 		}
 
 		return $result;
@@ -166,10 +214,27 @@ class Document_model extends CI_Model {
 		return get_object_vars($this);
 	}
 	public function getRegistersArray() {
-		$sql = "select use_name as user , reg_date as date , if(reg_action=1,'Cargado',if(reg_action=2,'Ingresado','' ) ) as action from rrf_register
-		  inner join rrf_user  on use_id = reg_use_id where reg_doc_id = ".$this->_columns['doc_id'];
+		$sql = "select use_name as user , reg_date as date , sta_name as action from rrf_register
+		  inner join rrf_user   on use_id = reg_use_id
+		  inner join rrf_status on reg_sta_id =  sta_id
+		   where reg_doc_id = ".$this->_columns['doc_id'];
 		//echo $sql;
 		$result = $this->db->query($sql, false);
+
+		return $result->result_array();
+	}
+	public function getCatchArray() {
+		$sql = 'SELECT con_id,con_obs as obs ,con_date as date ,res_name as responsable ,mot_name as motive ,use_name as user,
+			sta_name as status
+		 from rrf_contingency
+		  inner join rrf_user on con_use_id = use_id
+		  inner join rrf_motive on  mot_id = con_mot_id
+		  inner join rrf_responsable on res_id = con_res_id
+		  inner join rrf_status  on sta_id = con_sta_id
+		  where con_doc_id = '.$this->_columns['doc_id'];
+
+		$result = $this->db->query($sql, false);
+
 		return $result->result_array();
 	}
 

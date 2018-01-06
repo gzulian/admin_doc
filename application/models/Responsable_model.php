@@ -1,20 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Register_model extends CI_Model {
+class Responsable_model extends CI_Model {
 
-	public function __construct() {
-		parent::__construct();
-		//Do your magic here
-	}
 	private $_columns = array(
-		'reg_id'     => null,
-		'reg_date'   => '',
-		'reg_sta_id' => null,
-		'reg_use_id' => null,
-		'reg_doc_id' => null,
+		'res_id'   => null,
+		'res_name' => '',
 	);
-	protected static $_table = 'rrf_register';
+	protected static $_table = 'rrf_responsable';
 
 	public function findAll($where = array()) {
 		$this->load->database();
@@ -29,13 +22,13 @@ class Register_model extends CI_Model {
 	}
 	public function getRequired() {
 		$requiredFields = array(
-			'pro_name',
-			'pro_datesys',
+			'red_id',
+			'res_name',
 		);
 		return $requiredFields;
 	}
 	public function isNew() {
-		return $this->_columns['reg_id'] == 0;
+		return $this->_columns['res_id'] == 0;
 	}
 	public function validate() {
 		$emptyCollumn = array();
@@ -57,7 +50,7 @@ class Register_model extends CI_Model {
 	public function findById($id = null) {
 		$id = intval($id);
 		$this->load->database();
-		$res    = $this->db->get_where(self::$_table, array('reg_id' => $id));
+		$res    = $this->db->get_where(self::$_table, array('res_id' => $id));
 		$result = null;
 		if ($res->num_rows() == 1) {
 			$result = $this->create($res->row_object());
@@ -69,7 +62,7 @@ class Register_model extends CI_Model {
 	}
 
 	public function create($row) {
-		$user = new Register_model();
+		$user = new Responsable_model();
 		$user->setColumns($row);
 		return $user;
 	}
@@ -77,11 +70,11 @@ class Register_model extends CI_Model {
 	public function save() {
 		try {
 			$this->load->database();
-			if ($this->_columns['reg_id'] == 0 || is_null($this->_columns['reg_id'])) {
+			if ($this->_columns['res_id'] == 0) {
 				$this->db->insert(self::$_table, $this->_columns);
-				$this->_columns['reg_id'] = $this->db->insert_id();
+				$this->_columns['res_id'] = $this->db->insert_id();
 			} else {
-				$this->db->where('reg_id', $this->_columns['reg_id']);
+				$this->db->where('res_id', $this->_columns['res_id']);
 				$this->db->update(self::$_table, $this->_columns);
 			}
 		} catch (Exception $e) {
@@ -95,5 +88,5 @@ class Register_model extends CI_Model {
 
 }
 
-/* End of file Register_model.php */
-/* Location: ./application/models/Register_model.php */
+/* End of file Responsable_mode.php */
+/* Location: ./application/models/Responsable_mode.php */

@@ -6,10 +6,12 @@
     background-color: rgba(182, 99, 135, 0.11);
   }
 </style>
+<link rel="stylesheet" type="text/css" href="<?=base_url('resources/js/datepicker/timepicker.css')?>">
+<link rel="stylesheet" type="text/css" href="<?=base_url('resources/js/jquery-ui/jquery-ui.min.css')?>">
 <div class="right_col" role="main">
   <div class="page-title">
     <div class="title_left">
-      <h3>Estado de pago de documentos</h3>
+
     </div>
   </div>
   <div class="clearfix"></div>
@@ -18,7 +20,7 @@
       <div class="col-md-12">
         <div class="x_panel">
           <div class="x_title">
-            <h3>Filtros</h3>
+            <h3>Estado de pago de documentos</h3>
           </div>
           <div class="x_content">
             <div id="errors">
@@ -26,35 +28,15 @@
             </div>
             <form action="#" id="filter" method="post" accept-charset="utf-8" class=" fill-up">
               <div class="row">
-                <div class="col-md-2"><input name="filter[number]" type="number" class="form-control" placeholder="Número de factura"   /> </div>
-                <div class="col-md-2"><input name="filter[customer]" type="text" class="form-control" placeholder="Nombre del cliente"/> </div>
-                <div class="col-md-1">
-                   <select placeholder="AÑO" class="form-control"  name="filter[year]">
-                      <option value=" " selected="selected" >AÑO</option>
-                      <option value="2017" >2017</option>
-                      <option value="2018" >2018</option>
-                      <option value="2019" >2019</option>
-                      <option value="2020" >2020</option>
-                      <option value="2021" >2021</option>
+                <div class="col-md-2"><input name="filter[number]" type="number" class="form-control" placeholder="N° de orden"   /> </div>
+                <div class="col-md-3"><input name="filter[customer]" type="text" class="form-control" placeholder="Nombre del cliente"/> </div>
+                <div class="col-md-2">
+                   <input type="text" placeholder="Desde"  class="form-control datepicker" name="filter[from]" required="required">
 
-                    </select>
                 </div>
                 <div class="col-md-2">
-                  <select placeholder="AÑO" class="form-control"  name="filter[month]">
-                    <option value=" " selected="selected">MES</option>
-                    <option value="Enero">Enero</option>
-                    <option value="Febrero">Febrero</option>
-                    <option value="Marzo">Marzo</option>
-                    <option value="Abril">Abril</option>
-                    <option value="Mayo">Mayo</option>
-                    <option value="Junio">Junio</option>
-                    <option value="Julio">Julio</option>
-                    <option value="Agosto">Agosto</option>
-                    <option value="Septiembre">Septiembre</option>
-                    <option value="Octubre">Octubre</option>
-                    <option value="Noviembre">Noviembre</option>
-                    <option value="Diciembre">Diciembre</option>
-                  </select>
+                  <input type="text" placeholder="Hasta"  class="form-control datepicker" name="filter[to]" required="required">
+
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-filter "></span></button>
@@ -70,7 +52,9 @@
         <div class="x_panel">
           <div class="x_content">
               <div class="row">
-                <div class="col-md-12">
+<?php if (isset($filters)):?>
+<div class="col-md-12">
+
                   <table class="table table-responsive"  id="dataTables">
                     <thead>
                       <tr>
@@ -92,7 +76,8 @@
                           <td><?=number_format($document->doc_montousd, 0, ',', '.')?></td>
                           <td><?=$document->doc_datedigrecepcionfac?></td>
                         </tr>
-<?php endforeach?>
+<?php endforeach;?>
+<?php endif;?>
 </tbody>
                   </table>
                 </div>
@@ -103,18 +88,42 @@
     </div>
   </div>
 <script src="" type="text/javascript" charset="utf-8" ></script>
+<script src="<?=base_url('resources/js/jquery-ui/jquery-ui.js')?>"></script>
+<script src="<?=base_url('resources/js/jquery-ui/spanish_language.js')?>"></script>
+<script src="<?=base_url('resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js')?>"></script>
+<script src="<?=base_url('resources/vendors/datatables.net-buttons/js/buttons.flash.min.js')?>"></script>
+<script src="<?=base_url('resources/vendors/datatables.net-buttons/js/buttons.html5.min.js')?>"></script>
+<script src="<?=base_url('resources/vendors/datatables.net-buttons/js/buttons.print.min.js')?>"></script>
+<script src="<?=base_url('resources/vendors/datatables.net-buttons/js/buttons.colVis.min.js')?>"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="<?=base_url('resources/vendors/datatables.net-bs/DATATABLE.css')?>"/>
+
+<script type="text/javascript" src="<?=base_url('resources/vendors/datatables.net-bs/DATATABLE.js')?>"></script>
 <script>
   $(function(){
     //console.log(loadingDiv);
 
+    $('.datepicker').datepicker({
+              locale:'es',
+              language:'es',
+              regional:'es',
+              dateFormat: 'dd-mm-yy',
+              beforeShow: function() {
+                  setTimeout(function(){
+                      $('.ui-datepicker').css('z-index', 99999999999999);
+                  }, 0);
+              }
+            });
 
-      var table  = $("#dataTables").DataTable( {"oLanguage": {
+       var table  = $("#dataTables").DataTable( {"oLanguage": {
         "sLengthMenu": "Mostrar _MENU_ registros por página",
         "sZeroRecords": "Sin resultados",
         "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
         "sInfoEmpty": "",
         "sInfoFiltered": "(Filtrando from _MAX_ total registros)",
-        "sSearch":"Buscar",
+        "sSearch":"Buscar:  ",
         "oPaginate": {
         "sFirst":      "Primera",
         "sLast":       "Última",
@@ -122,14 +131,11 @@
         "sPrevious":   "Anteriror"
         }
       },iDisplayLength: 22,
-        bJQueryUI: false,
-        bAutoWidth: false,
-        bDeferRender: true,
-        sPaginationType: "full_numbers",
+         "dom": 'Bfrtip',
+                    "buttons": [
+                {extend: 'excel', title: 'REPORTE POR ESTADO DE PAGO DE DOCUMENTOS'},
+            ]
 
-        sDom: "<\"table-header\"fl>t<\"table-footer\"ip>",
-        sScrollY:        "200px",
-        sScrollCollapse: true,
 
 
       });
@@ -139,8 +145,8 @@
       $("[name='filter[customer]']").val("<?=$filters['customer']?>");
 
 
-      $("[name='filter[year]']").val("<?=$filters['year']?>");
-      $("[name='filter[month]']").val("<?=$filters['month']?>");
+      $("[name='filter[to]']").val("<?=$filters['to']?>");
+      $("[name='filter[from]']").val("<?=$filters['from']?>");
 <?php endif?>
 
   })

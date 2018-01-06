@@ -6,9 +6,13 @@
       .nav-tabs li.disabled { color: grey; }
     .nav-tabs li.disabled a:hover { border-color: transparent; }
 
+.glyphicon {
+    font-size: 16px;
+}
 
-
-
+td{
+  color: #000;
+}
 
 </style>
 <link rel="stylesheet" type="text/css" href="<?=base_url('resources/js/datepicker/timepicker.css')?>">
@@ -27,13 +31,15 @@
                 <div class="x_content">
                   <div class="" role="tabpanel" data-example-id="togglable-tabs">
                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                      <li role="presentation" class="active"><a href="#tab_content1" status="0" id="pendingTab" role="tab" data-toggle="tab" aria-expanded="true">Pendientes <span class="badge" id="pendingLabel" ></span></a>
+                      <li role="presentation" class="active"><a href="#tab_content1" status="0" id="pendingTab" role="tab" data-toggle="tab" aria-expanded="true">Emitidos <span class="badge" id="pendingLabel" ></span></a>
                       </li>
                       <li role="presentation" class=""><a href="#tab_content2" status="1" role="tab" id="okTab" data-toggle="tab" aria-expanded="false">Recepcionados <span class="badge" id="okLabel" ></span> </a>
                       </li>
-                      <li role="presentation" class=""><a href="#tab_content3" status="2" role="tab" id="returnTab" data-toggle="tab" aria-expanded="false">En proceso de retorno <span class="badge"  id="returnLabel" ></span></a>
+                      <li role="presentation" class=""><a href="#tab_content3" status="2" role="tab" id="returnTab" data-toggle="tab" aria-expanded="false">Pendiente de retorno <span class="badge"  id="returnLabel" ></span></a>
                       </li>
-                      <li role="presentation" class=""><a href="#tab_content4" status="3" role="tab" id="digitalizedTab" data-toggle="tab" aria-expanded="false">Digitalizados <span id="digitalizedLabel"  class="badge"></span></a>
+                      <li role="presentation" class=""><a href="#tab_content4" status="3" role="tab" id="digitalizedTab" data-toggle="tab" aria-expanded="false">En proceso de digitalización <span id="digitalizedLabel"  class="badge"></span></a>
+                      </li>
+                      <li role="presentation" class=""><a href="#tab_content5"  status="4" role="tab" id="historicTab" data-toggle="tab" aria-expanded="false">Digitalizados <span id="historicLabel"  class="badge"></span></a>
                       </li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
@@ -48,8 +54,10 @@
                           <div class="col-md-2 col-sm-2 col-xs-12" ></div>
                           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                             <div class="pull-right input-group">
-                              <button  id="receiveAction" data-target=".modalPending" data-toggle="modal" type="button" class="actionBtn btn btn-primary "><span class="glyphicon glyphicon-check"></span> <b>Recepcionar</b></button>
-                            </div>
+<?php if (isAsistant()):?>
+<button  id="receiveAction" data-target=".modalPending" data-toggle="modal" type="button" class="pull-right actionBtn btn btn-primary "><span class="glyphicon glyphicon-check"></span> <b>Recepcionar</b></button>
+<?php endif?>
+</div>
                           </div>
                         </div>
                         <div class="clearfix"></div>
@@ -58,7 +66,6 @@
                             <thead>
                               <tr class="headings">
                                 <th>  <input type="checkbox" id="check-all" class="check-all"></th>
-                                <th class="column-title sortable">N° Orden <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Tipo  <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">N° Factura <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title sortable">N° Guía <span class="glyphicon glyphicon-sort"></span></th>
@@ -83,8 +90,10 @@
                           <div class="col-md-2 col-sm-2 col-xs-12" ></div>
                           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                             <div class="pull-right input-group">
-                              <button  id="radicacionAction" data-target=".modalPending" data-toggle="modal" type="button" class="actionBtn btn btn-primary "><span class="glyphicon glyphicon-send"></span> <b>Radicación</b></button>
-                            </div>
+<?php if (isAsistant()):?>
+<button  id="radicacionAction" data-target=".modalPending" data-toggle="modal" type="button" class="actionBtn btn btn-primary "><span class="glyphicon glyphicon-send"></span> <b>Radicación</b></button>
+<?php endif?>
+</div>
                           </div>
                         </div>
                         <div class="clearfix"></div>
@@ -119,8 +128,10 @@
                           <div class="col-md-2 col-sm-2 col-xs-12" ></div>
                           <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                             <div class="pull-right input-group">
-                              <button  id="returnAction" data-target=".modalPending" data-toggle="modal" type="button" class="actionBtn btn btn-primary "><span class="glyphicon glyphicon-backward"></span> <b>Retorno</b></button>
-                            </div>
+<?php if (isAsistant()):?>
+<button  id="returnAction" data-target=".modalPending" data-toggle="modal" type="button" class="actionBtn btn btn-primary "><span class="glyphicon glyphicon-repeat"></span> <b>Retornar</b></button>
+<?php endif?>
+</div>
                           </div>
                         </div>
                           <table class="documents table  jambo_table bulk_action  " id="documentsReturn">
@@ -129,13 +140,13 @@
                                 <th>  <input type="checkbox" id="check-all" class="check-all"></th>
                                 <th class="column-title sortable">N° Factura <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title sortable">N° Guía <span class="glyphicon glyphicon-sort"></span></th>
-                                <th class="column-title sortable">N° Tipo  <span class="glyphicon glyphicon-sort"></span></th>
-                                <th class="column-title sortable">Fecha <span class="glyphicon glyphicon-sort"></span></th>
+                                <th class="column-title sortable">Tipo  <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Fecha radicación <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">F. Estimada radicación <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Ciudad <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Transportista <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Cliente <span class="glyphicon glyphicon-sort"></span> </th>
+                                <th class="column-title ">Ver </th>
                               </tr>
                             </thead>
                             <tbody>
@@ -145,22 +156,72 @@
                       </div>
                       <!--DOCUMENTOS EN ESTADO DE DIGITALZACIÓN -->
                       <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="digitalizedTab">
+                         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-left top_search">
+                            <div class="input-group">
+                              <input id="" type="text" class="form-control filtro" placeholder="Buscar por...">
+                            </div>
+                          </div>
+                        <div class="pull-right input-group">
+                          <div class="col-md-2 col-sm-2 col-xs-12" ></div>
+<?php if (isAsistant()):?>
+<button  id="digiAction" data-target=".modalPending" data-toggle="modal" type="button" class="actionBtn btn btn-primary "><span class="glyphicon glyphicon-info-sign"></span> <b>Digitalizar</b></button>
+<?php endif?>
+</div>
                         <table class="documents table  jambo_table bulk_action  " id="documentsdigitalized">
                           <thead>
                             <tr class="headings">
-                              <th>  <input type="checkbox" id="check-all" class=""></th>
-                              <th class="column-title sortable">N° Orden <span class="glyphicon glyphicon-sort"></span></th>
-                              <th class="column-title sortable">N° Tipo  <span class="glyphicon glyphicon-sort"></span></th>
+                              <th>  <input type="checkbox" id="check-all" class="check-all"></th>
                               <th class="column-title sortable">N° Factura <span class="glyphicon glyphicon-sort"></span> </th>
                               <th class="column-title sortable">N° Guía <span class="glyphicon glyphicon-sort"></span></th>
-                              <th class="column-title sortable">Fecha <span class="glyphicon glyphicon-sort"></span></th>
+                              <th class="column-title sortable">Tipo  <span class="glyphicon glyphicon-sort"></span></th>
+                              <th class="column-title sortable">Fecha de retorno <span class="glyphicon glyphicon-sort"></span></th>
                               <th class="column-title sortable">Cliente <span class="glyphicon glyphicon-sort"></span> </th>
+                              <th class="column-title">Ver</th>
                             </tr>
                           </thead>
                           <tbody>
                           </tbody>
                         </table>
                       </div>
+                      <div role="tabpanel" class="tab-pane fade"  id="tab_content5" aria-labelledby="historicTab" >
+                          <!-- filtro -->
+                          <form action="#" id="filter" method="post" accept-charset="utf-8" class=" fill-up">
+                            <div class="row">
+                              <div class="col-md-3"><input name="filter[customer]" type="text" class="form-control" placeholder="Nombre del cliente"/> </div>
+                              <div class="col-md-2">
+                                 <input type="text" placeholder="Digitalizados Desde"  class="form-control datepicker" name="filter[from]" required="required">
+
+                              </div>
+                              <div class="col-md-2">
+                                <input type="text" placeholder="Digitalizados  Hasta"  class="form-control datepicker" name="filter[to]" required="required">
+
+                              </div>
+                              <div class="col-md-2">
+                                  <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-filter "></span></button>
+                                </div>
+                            </div>
+                          </form>
+                          <!-- fin filtros -->
+                          <div class="clearfix"></div>
+                          <table class="documents table  jambo_table bulk_action  " id="documentsHistoric" style="display: none">
+                          <thead>
+                            <tr class="headings">
+                              <th class="column-title sortable">N° Factura <span class="glyphicon glyphicon-sort"></span> </th>
+                              <th class="column-title sortable">N° Guía <span class="glyphicon glyphicon-sort"></span></th>
+                              <th class="column-title sortable">Tipo  <span class="glyphicon glyphicon-sort"></span></th>
+                              <th class="column-title sortable">Fecha  <span class="glyphicon glyphicon-sort"></span></th>
+                              <th class="column-title sortable">Fecha de digitalización <span class="glyphicon glyphicon-sort"></span></th>
+                              <th class="column-title sortable">Fecha radicación <span class="glyphicon glyphicon-sort"></span></th>
+                              <th class="column-title sortable">Cliente <span class="glyphicon glyphicon-sort"></span> </th>
+                              <th class="column-title">Ver</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -174,7 +235,7 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content" >
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="font-size: 20px;" class="closeModal close glyphicon glyphicon-remove "></span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Recepción de documentos </h4>
               </div>
@@ -208,17 +269,24 @@
                             <br/>
                             <br/>
                             <form action="#" class="action" id="receiveForm" method="get" accept-charset="utf-8">
-                              <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar"> </span> Fecha de recepción</span>
-                                <input required="required" name="dataForm[date]" type="text" class="form-control  datepicker" id="receiveDate" >
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-12" >
-                                    <ul id="" class="nav-pills infoReceive">
-                                    </ul>
+                                <table class="table  table-responsive" >
+                                <tbody class="buscar">
+                                  <tr>
+                                      <th class="text-lefth th-title" >Entrega de logística a sac:</th>
+                                      <td class="text-lefth" >
+                                        <input required="required" readonly="readonly" name="dataForm[date]" type="text" class="form-control  datepicker" id="receiveDate" >
+                                      </td>
+                                      <td><span class=" glyphicon glyphicon-calendar"></span></td>
+                                  </tr>
+                                  </tbody>
+                                  </table>
+                                  <div class="row">
+                                      <div class="col-md-12" >
+                                        <ul id="" class="nav-pills infoReceive">
+                                        </ul>
+                                      </div>
                                   </div>
-                              </div>
-                              <button type="submit" id="receiveAction" class=" btn btn-primary"><span class="glyphicon-check glyphicon"></span> Recepcionar</button>
+                                  <button type="submit" id="receiveAction" class=" pull-right btn btn-primary"><span class="glyphicon-check glyphicon"></span> Recepcionar</button>
                             </form>
                           </div>
                           <!-- end reception -->
@@ -233,44 +301,21 @@
                                 </thead>
                                 <tbody class="buscar">
                                   <tr>
-                                    <th class="text-lefth th-title">Código de ciudad: </th>
-                                    <td class="text-lefth">
-                                      <select id="city" name="dataForm[city]" class="form-control">
-                                        <option value="">Seleccione</option>
-                                        <option value="C01">C01</option>
-                                        <option value="C02">C02</option>
-                                        <option value="C03">C03</option>
-                                        <option value="C04">C04</option>
-                                        <option value="C05">C05</option>
-                                        <option value="C06">C06</option>
-                                        <option value="C07">C07</option>
-                                        <option value="C08">C08</option>
-                                        <option value="C09">C09</option>
-                                        <option value="C10">C10</option>
-                                        <option value="C11">C11</option>
-                                        <option value="C12">C12</option>
-                                        <option value="C13">C13</option>
-                                        <option value="ISLA DE PASCUA">ISLA DE PASCUA</option>
-                                        <option value="C16">C16</option>
-                                      </select>
+                                    <th class="text-lefth th-title" >Se envía a radicación</th>
+                                    <td class="text-lefth" >
+                                      <input type="radio" class="radicacion"  required="required" value="SI" name="dataForm[send]">SI
+                                      <input type="radio" class="radicacion"  required="required" value="NO" name="dataForm[send]">NO
                                     </td>
-
                                   </tr>
                                   <tr>
-                                      <th class="text-lefth th-title" >Se envía a radicación</th>
-                                      <td class="text-lefth" >
-                                        <input type="radio" class="radicacion" id="r1" value="SI" name="dataForm[send]">SI
-                                        <input type="radio" class="radicacion" id="r2" value="NO" name="dataForm[send]">NO
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                    <th class="text-lefth" >Fecha entrega a radicación</th>
-                                    <td class="text-lefth" ><input readonly="readonly" type="text" class="datepicker form-control"  name="dataForm[date]" /></td>
+                                    <th class="text-lefth" >Entrega a radicación</th>
+                                    <td class="text-lefth" ><input required="required" readonly="readonly" type="text" class="datepicker form-control"  name="dataForm[date]" /></td>
+                                    <td><span class=" glyphicon glyphicon-calendar"></span></td>
                                   </tr>
                                   <tr>
                                     <th class="text-lefth">Transportista</th>
                                     <td class="text-right">
-                                      <select name="dataForm[transport]"  class="form-control" >
+                                      <select name="dataForm[doc_transport]"  class="form-control" >
                                         <option value="">SELECCIONE</option>
                                         <option value="FASTCO">FASTCO</option>
                                         <option value="TLS">TLS</option>
@@ -278,12 +323,12 @@
                                       </select>
                                     </td>
                                   </tr>
-                                  <tr>
+                                  <!--tr>
                                     <th class="text-lefth" >F. estimada radicación:</th>
                                     <td class="text-lefth" >
                                       <input type="text" readonly="readonly" class="form-control" value="" id="estimated" name="dataForm[estimated]">
                                     </td>
-                                  </tr>
+                                  </tr -->
                                   <tr>
                                     <th class="text-lefth" >Observación SAC:</th>
                                     <td class="text-lefth" >
@@ -294,7 +339,7 @@
                                   <tr>
                                     <th>&nbsp;</th>
                                     <td class="text-right" >
-                                        <button class="receiveAction btn btn-primary"  type="submit"><span class="glyphicon-send glyphicon"></span> Enviar a radicación</button>
+                                        <button class="receiveAction btn btn-primary"  type="submit"><span class="glyphicon-send glyphicon"></span> Radicación</button>
                                     </td>
                                   </tr>
                                   <!-- tr>
@@ -320,46 +365,54 @@
                               </thead>
                               <tbody class="buscar">
                                 <tr>
-                                  <th class="">Fecha entrega TLS</th>
+                                  <th class="">Entrega a transportista</th>
                                   <td class="text-right" >
-                                    <input type="text" class="datepicker form-control"  name="formData[doc_ftls]" />
+                                    <input type="text" class="datepicker form-control"   required="required" name="dataForm[ftls]" />
                                   </td>
+                                  <td><span class=" glyphicon glyphicon-calendar"></span></td>
                                 </tr>
-                                <tr>
+                                <!-- tr>
                                   <th class="">Fecha estimada factura de TLS:</th>
                                   <td class="text-right" >
                                     <span id=""></span>
                                   </td>
-                                </tr>
-                                <tr>
-                                  <th class="">Días de confirmación TLS:</th>
+                                </tr -->
+                                <!-- tr>
+                                  <th class="">Días de confirmación Tr:</th>
                                   <td class="text-right" >
                                     <span id=""></span>
                                   </td>
-                                </tr>
+                                </tr -->
 
                                 <tr>
-                                  <th class="">Observación TLS 1</th>
+                                  <th class="">Observación de retorno</th>
                                   <td class="text-right" >
-                                    <textarea class="form-control"  name="formData[doc_obstls1]"></textarea>
+                                    <textarea class="form-control"  name="dataForm[obstls1]"></textarea>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <th class="">Observación TLS 2</th>
+                                  <th class="">Observación de retorno 2</th>
                                   <td class="text-right" >
-                                    <textarea class="form-control"  name="formData[doc_obstls2]" ></textarea>
+                                    <textarea class="form-control"  name="dataForm[obstls2]" ></textarea>
                                   </td>
                                 </tr>
                                 <tr>
                                   <th class=""></th>
                                   <td class="text-right" >
-                                    <button class="receiveAction btn btn-primary" type="submit" ><span class="glyphicon glyphicon-fast-backward "></span> Retornar</button>
+                                    <button class="receiveAction btn btn-primary" type="submit" ><span class="glyphicon glyphicon-repeat "></span> Retornar</button>
                                   </td>
                                 </tr>
                               </tbody>
                             </table>
                             </form>
+                            <div class="row">
+                                <div class="col-md-12" >
+                                  <ul id="" class="nav-pills infoReceive">
+                                  </ul>
+                                </div>
+                            </div>
                           </div>
+
                           <div class="tab-pane" id="level4">
                             <form action="#" id="digiForm" method="post" accept-charset="utf-8" class="action form-horizontal">
                             <div class="clearfix"></div>
@@ -369,21 +422,34 @@
                               </thead>
                               <tbody class="buscar">
                                 <tr>
-                                  <th class="">Fecha digi. Factura Recepcionada por cliente: </th>
+                                  <th class="">Digitalización documento: </th>
                                   <td class="text-right" >
-                                    <input type="text" class="datepicker form-control"  name="formData[doc_ftls]" />
+                                    <input type="text" class="datepicker form-control"  name="dataForm[datedigrecepcionfac]" />
                                   </td>
+                                  <td><span class=" glyphicon glyphicon-calendar"></span></td>
                                 </tr>
                                 <tr>
-                                  <th class="">Fecha digitalización guía:</th>
+                                  <th class="">Fecha radicación factura:</th>
                                   <td class="text-right" >
-                                    <span id=""></span>
+                                    <input type="text" class="datepicker form-control"  name="dataForm[dateradicacionfact]" />
+                                  </td>
+                                  <td><span class=" glyphicon glyphicon-calendar"></span></td>
+                                </tr>
+                                <tr>
+                                  <th class=""></th>
+                                  <td class="text-right" >
+                                    <button class="receiveAction btn btn-primary" type="submit" ><span class="glyphicon glyphicon-info-sign "></span> Digitalizar</button>
                                   </td>
                                 </tr>
-
                               </tbody>
                             </table>
                             </form>
+                            <div class="row">
+                              <div class="col-md-12" >
+                                <ul id="" class="nav-pills infoReceive">
+                                </ul>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -391,313 +457,76 @@
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              </div>
             </div>
           </div>
         </div>
-         <div  class="modal fade documentDetail " tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!--  : catchAction -->
+        <div  class="modal fade catchModal" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content" >
               <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="font-size: 20px;" class="closeModal close glyphicon glyphicon-remove "></span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Visualizar documento </h4>
+                <h4 class="modal-title" id="myModalLabel">Motivos y responsables de contingencia</h4>
               </div>
               <div class="modal-body" >
-                <div class="row">
-                  <div class="col-md-12  col-xs-12">
+
                     <div class="x_panel">
-                      <div class="x_title"><b>Documento: </b></div>
+                      <div class="x_title"></div>
                       <div class="x_content">
-                          <ul class="nav nav-tabs ">
-                            <li class=" active" > <a id="processTab"  href="#process" data-toggle="tab">Datos</a></li>
-                            <li class=" "><a id="generalTab" href="#general" data-toggle="tab">General</a></li>
-                            <li class=" " ><a id="trazabilityTab"  href="#trazability" data-toggle="tab">Trazabilidad</a></li>
-                          </ul>
-                          <div class="tab-content">
-                            <div class="tab-pane active" id="process">
-                              <br/>
-                              <br/>
-                               <form action="#" id="recive" method="post" accept-charset="utf-8" class="form-horizontal">
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Se envía a radicación:</label>
-                                    <input type="radio" class="radicacion" id="r1" value="SI" name="document[doc_radicacion]">SI
-                                    <input type="radio" class="radicacion" id="r2" value="NO" name="document[doc_radicacion]">NO
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label">F. estimada radicación: </label>
-                                    <input type="text" readonly="readonly" class="form-control" value="" name="document[doc_dateradicacion]">
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label">Fecha radicación factura: </label>
-                                    <input type="text" readonly="readonly"  class="form-control datepicker2" name="document[doc_dateradicacionfact]" />
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label">Retorno</label>
-                                    <input style="text-transform:uppercase"  maxlength="2"  type="text" name="document[doc_return]" class="form-control" />
-                                  </div>
-                                </div>
-                                <br/>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <label class="control-label">Transportista: </label>
-                                    <input type="text" name="document[doc_transport]"  class="form-control" />
-                                  </div>
-                                </div>
-                                <br/>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Fecha entrega logistica a SAC</label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_fsac]" />
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Fecha entrega a radicación</label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_fradicacion]" />
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label ">Fecha digitalización guía </label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_guidedate]" />
-                                  </div>
-                                  <div class="col-md-3">
-                                    <label class="control-label " style="font-size: 10px;">F. digi. factura recep. por cliente</label>
-                                    <input readonly="readonly" type="text" class="datepicker2 form-control"  name="document[doc_facdate]" />
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <label class="control-label ">Observación  Bodega </label>
-                                    <textarea class="form-control"  name="document[doc_obsbodega]"></textarea>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <label class="control-label ">Observación  SAC</label>
-                                    <textarea class="form-control"  name="document[doc_obssac]" ></textarea>
-                                  </div>
-                                </div>
-                                <br/>
-                                <fieldset>
-                                  <legend><h5>TLS</h5></legend>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                  <label class="control-label">Fecha entrega TLS</label>
-                                  </div>
-                                  <div class="col-md-3">
-                                    <input type="text" class="datepicker form-control"  name="document[doc_ftls]" />
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-md-6">
-
-                                    <label class="control-label ">Observación  TLS 1 </label>
-                                    <textarea class="form-control"  name="document[doc_obstls1]"></textarea>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <label class="control-label ">Observación  TLS 2 </label>
-                                    <textarea class="form-control"  name="document[doc_obstls2]" ></textarea>
-                                  </div>
-                                </div>
-                                </fieldset>
-                                <br/>
-                                <div class="row">
-                                  <!--div class="col-md-12">
-                                    <button type="submit" class="pull-right btn btn-green btn-lg"><i class="icon-save">  </i>Guardar</button>
-                                  </div -->
-                                </div>
-
-                                 <input type="hidden" class=""  name="document[doc_pro_id]" />
-                                 <input type="hidden" class=""  name="document[doc_id]" />
-                                 <input type="hidden" class=""  name="document[doc_serial]" />
-                            </form>
+                        <form action="#" id="catchForm" method="post" accept-charset="utf-8">
+                          <div class="row">
+                            <div class="col-md-5">
+                              <label class="control-label ">Motivo:</label>
+                              <select name="catchData[motive]" class="form-control " >
+                                <option value="">Seleccione</option>
+<?php foreach ($motive as $m):?>
+                                  <option value="<?=$m->get('mot_id')?>"><?=$m->get('mot_name')?></option>
+<?php endforeach;?>
+</select>
                             </div>
-                            <div class="tab-pane" id="general">
-                              <br/>
-                              <br/>
-                              <div class="row">
-                              <div class="col-md-6">
-                                <table class=" table table-bordered table-condensed">
-                                  <tr>
-                                    <td>Mes</td>
-                                    <td><span id="doc_month"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ciudad</td>
-                                    <td><span id="doc_city"></span></td>
-                                  </tr><tr>
-                                    <td>Número de orden</td>
-                                    <td><span id="doc_serial"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Tipo de orden</td>
-                                    <td><span id="doc_ordertype"></span></td>
-                                  </tr>
-
-                                </table>
-
-                              </div>
-                              <div class="col-md-6">
-                                <table class="table table-bordered table-condensed">
-                                  <tr>
-                                    <td><label class="control-label">Fecha estimada factura de log a sac: </label></td>
-                                    <td><span id="doc_datelogtosac"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Días de retorno logistica: </label></td>
-                                    <td><span id="doc_daylogic"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Status logistica: </label></td>
-                                    <td><span id="doc_logicstatus"></span></td>
-                                  </tr>
-                                </table>
-
-                              </div>
+                            <div class="col-md-5">
+                              <label class="control-label">Responsable </label>
+                              <select name="catchData[responsable]" class="form-control " >
+                                <option value="">Seleccione</option>
+<?php foreach ($responsable as $r):?>
+                                  <option value="<?=$r->get('res_id')?>"><?=$r->get('res_name')?></option>
+<?php endforeach;?>
+                              </select>
                             </div>
-                            <br/>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <table class=" table table-bordered table-condensed">
-                                  <tr>
-                                    <td><label class="control-label">Nombre cliente 1: </label></td>
-                                    <td><span id="doc_customer"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Nombre cliente 2: </label></td>
-                                    <td><span id="doc_customerTwo"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Fecha</td>
-                                    <td><span id="doc_documentdate"></span></td>
-                                  </tr>
-                                </table>
-                              </div>
-                               <div class="col-md-6">
-                                <table class="table table-bordered table-condensed">
-
-                                  <tr>
-                                    <td><label class="control-label">Días de confirmación SETS: </label></td>
-                                    <td><span id="doc_daysets"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Status SAC: </label></td>
-                                    <td><span id="doc_statussac"></span></td>
-                                  </tr>
-                                </table>
-                              </div>
+                          </div>
+                          <br/>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label class="control-label">Observación: </label>
+                              <textarea class="form-control" name="catchData[obs]" ></textarea>
                             </div>
-                            <br/>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <table class=" table-bordered table-condensed">
-                                  <tr>
-                                    <td><label class="control-label">N° de factura: </label></td>
-                                    <td><span id="doc_facturenumber"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">N° de guía: </label></td>
-                                    <td><span id="doc_guidenumber"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">N° Orden de compra: </label></td>
-                                    <td><span id="doc_saleorder"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Ejecutivo: </label></td>
-                                    <td><span id="doc_executive"></span></td>
-                                  </tr>
-                                </table>
-                              </div>
-                              <div class="col-md-6">
-                                <table class="table table-bordered table-condensed">
-                                  <tr>
-                                    <td><label class="control-label">Fecha estimada factura de TLS: </label></td>
-                                    <td><span id="doc_datetls"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Días de confirmación TLS: </label></td>
-                                    <td><span id="doc_daytls"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Status FASTCO: </label></td>
-                                    <td><span id="doc_statusfastco"></span></td>
-                                  </tr>
-                                </table>
-                                <!-- -->
-
-                                <!-- -->
-                              </div>
+                          </div>
+                          <br/>
+                          <div class="row">
+                          <div class="col-md-12">
+                            <button class="btn btn-warning pull-right" type="submit"><span class="glyphicon glyphicon-warning-sign"></span> Ingresar</button>
                             </div>
-                            <br/>
-                            <div class="row">
-                              <div class="col-md-6">
-                                <table class="table table-bordered table-condensed">
-                                  <tr>
-                                    <td><label class="control-label">Monto ($): </label></td>
-                                    <td><span id="doc_monto"></span></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Monto (usd): </label></td>
-                                    <td><span id="doc_montousd"></span></td>
-                                  </tr>
-
-                                  <tr>
-                                    <td><label class="control-label">Almacen: </label></td>
-                                    <td><span id="doc_depot"></span></td>
-                                  </tr>
-                                </table>
-                              </div>
-                              <div class="col-md-6">
-                                <table class="table table-bordered table-condensed">
-
-                                  <tr>
-                                    <td><label class="control-label">Fecha digitalazación factura cliente: </label></td>
-                                    <td><span id="doc_datedigi"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Causal: </label></td>
-                                    <td><span id="doc_causal"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td><label class="control-label">Responsable: </label></td>
-                                    <td><span id="doc_responsible"></span></td>
-                                  </tr>
-                                </table>
-                              </div>
-                            </div>
-                            </div>
-                            <div class="tab-pane" id="trazability">
-                              <table id="trazabilityTable" class="table  table-responsive">
-                                <thead>
-                                  <tr>
-                                    <th>Acción</th>
-                                    <th>Fecha</th>
-                                    <th>Usuario</th>
-                                  </tr>
-                                </thead>
-                                <tbody class="buscar">
-
-                                </tbody>
-                              </table>
-                            </div>
+                          </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12" id="catchMessage"></div>
                           </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              </div>
+              <br/>
             </div>
           </div>
-        </div>
 
+        </div>
 
         <!-- FIN MODALES -->
         <script src="<?=base_url('resources/js/jquery-ui/jquery-ui.js')?>"></script>
         <script src="<?=base_url('resources/js/sortElements.js')?>" type="text/javascript" charset="utf-8" ></script>
-        <script src="<?=base_url('resources/js/moment/moment.min.js')?>"></script>
+
         <script src="<?=base_url('resources/js/datepicker/Timepicker.js')?>"></script>
         <script src="<?=base_url('resources/js/jquery-ui/spanish_language.js')?>"></script>
         <script>
@@ -721,7 +550,7 @@
               }
             });
 
-            $(".actionBtn").click(function(){
+            $(document).on('click',".actionBtn",function(){
               var action = $(this).attr("id");
               var tab;
               switch(action){
@@ -734,10 +563,11 @@
                 case 'returnAction':
                     tab = 'refLevel3';
                 break;
-                case 'digitalizedAction':
+                case 'digiAction':
                     tab = 'refLevel4';
                 break;
               }
+
               $('#'+tab).attr("data-toggle","tab");
               $('#'+tab).trigger('click');
               $('.t').not('.active').find('a').removeAttr("data-toggle");
@@ -789,6 +619,18 @@
                         $("#trazabilityTable").append(tr);
                       });
                     }
+                    $("#catchTable tbody").empty();
+                    if(typeof response.catch != 'undefined'){
+                      $.each(response.catch, function (key, data) {
+                        var tr = $("<tr>");
+                        tr.append("<td>"+data.responsable+"</td>");
+                        tr.append("<td>"+data.motive+"</td>");
+                        tr.append("<td>"+data.status+"</td>");
+                        tr.append("<td>"+moment(data.date).format('DD-MM-YYYY HH:mm')+"</td>");
+                        tr.append("<td>"+data.user+"</td>");
+                        $("#catchTable tbody").append(tr);
+                      });
+                    }
                   },
                   complete:function(){
                      $("body").css("cursor",'default');
@@ -805,14 +647,14 @@
 
             /*RECEPCIONAR DOCUMENTO*/
             $('.modalPending').on('shown.bs.modal', function (e) {
-                var documentsSelected = $("tr  input:checked") ;
-                $(".infoReceive").empty();
-                /*to actually disable clicking the bootstrap tab, as noticed in comments by user3067524*/
-                //$('.t').not('.active').find('a').removeAttr("data-toggle");
-                documentsAdded  = [];
+                var documentsSelected = $(".documents td   input[type=checkbox]:checked") ;
+
+                $(".infoReceive").empty()
+                $('.t').not('.active').find('a').removeAttr("data-toggle");
+                documentsAdded  = new Array();
+                //console.log(documentsAdded);
+                $("#documentsAdd").empty();
                 if(documentsSelected.length > 0){
-                  /*salenumber type doc*/
-                  $("#documentsAdd").empty();
                   $(documentsSelected).each(function(index,tag){
                     $("#documentsAdd").append("<li class='documentsAdded list-group-item' id='d"+tag.id+"' >&nbsp; Doc: "+tag.value+"<span title='Quitar' class='glyphicon glyphicon-remove pull-right' ></span></li>");
                       documentsAdded.push(tag.id);
@@ -832,6 +674,7 @@
                 return value != removeItem;
               });
               $(this).remove();
+
               $("#totalDocumentsSelected").text(documentsAdded.length);
 
             });
@@ -841,10 +684,20 @@
                 var documents  = documentsAdded;
                 //documents.pop("_");
                 var action     = $(this).attr("id");
+                var validate   = true;
+                $.each($('input', $(this) ),function(k){
+
+                    if($(this).val().trim().length == 0){
+                      validate  = false;
+                      $(this).attr('placeholder',"Requerido")
+                    }
+
+                })
                 var dataForm   = $(this).serialize();
 
-                documents.toString();
-                if(acept && dataForm.length > 0 ){
+
+
+                if(acept && validate ){
                   $.ajax({
                       "type":"GET",
                       "dataType":"json",
@@ -891,13 +744,13 @@
                   return false;
             });
             /** fin recepción de documentos **/
+              var table ;
             $('a[data-toggle="tab"]').on('click', function (e) {
                 $(".infoReceive").empty();
-                var table ;
                 var tab = $(e.target).attr("status") // activated tab
                 if(typeof tab != 'undefined'){
                   $.ajax({
-                    "type":"POST",
+                    "type":"GET",
                     "dataType":"json",
                     "data":{status:tab},
                     "url":"<?=site_url('Document/getByStatus')?>",
@@ -907,27 +760,24 @@
                     success:function(data){
                         $(".documents tbody").empty();
                         switch(parseInt(tab)){
-                            case 0: // Pendientes
-                              table = $('#documentsPending');
-
-                              $( data ).each(function( index,value ) {
-                                var obj = JSON.parse(value);
-                                var tr  = $("<tr style='cursor:pointer;' id='doc"+obj.doc_id+"' class='doc even pointer' doc='"+obj.doc_id+"' >");
-                                tr.append('<td class="a-center"><input    type="checkbox" class="flat check" id="'+obj.doc_id+'"  value="'+obj.doc_salenumber+' | Tipo: '+obj.doc_ordertype+' "  name="table_records"></td>');
-                                tr.append("<td class='selectDocument' >"+obj.doc_serial+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
-                                tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button></td>");
-                                table.append(tr);
-                              });
-                            break;
-                            case 1: //recepcconados
-
+                          case 0: // Pendientes
+                            table = $('#documentsPending');
+                            $( data ).each(function( index,value ) {
+                              var obj = JSON.parse(value);
+                              var tr  = $("<tr style='cursor:pointer;' id='doc"+obj.doc_id+"' class='doc even pointer' doc='"+obj.doc_id+"' >");
+                              tr.append('<td class="a-center"><input    type="checkbox" class="flat check" id="'+obj.doc_id+'"  value="'+obj.doc_salenumber+' | Tipo: '+obj.doc_ordertype+' "  name="table_records"></td>');
+                              //tr.append("<td class='selectDocument' >"+obj.doc_serial+"</td>");
+                              tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
+                              tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
+                              tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
+                              tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
+                              tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
+                              tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> <?php if (isSupervisor()):?> <button type='button' data-target='.catchModal' data-toggle='modal' class='btn btn-warning btn-xs catchAction' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-warning-sign' ></span></button><?php endif?></td>");
+                              table.append(tr);
+                            });
+                          break;
+                          case 1: //recepcconados
                               table = $('#documentsOk');
-
                               //console.log(data);
                               $( data ).each(function( index,value ) {
                                 var obj = JSON.parse(value);
@@ -939,7 +789,7 @@
                                 tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_datelogtosac+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
-                                tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button></td>");
+                                tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> <?php if (isSupervisor()):?> <button type='button' data-target='.catchModal' data-toggle='modal' class='btn btn-warning btn-xs catchAction' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-warning-sign' ></span></button><?php endif;?></td>");
                                 table.append(tr);
                               });
                             break;
@@ -952,12 +802,14 @@
                                 tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_fradicacion+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_dateradicacion+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_city+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_transport+"</td>");
+                                tr.append("<td class='selectDocument' >"+obj.doc_carrier+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
+                                tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> <?php if (isSupervisor()):?> <button type='button' data-target='.catchModal' data-toggle='modal' class='btn btn-warning btn-xs catchAction' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-warning-sign' ></span></button><?php endif;?></td>");
+                                table.append(tr);
+
                                 table.append(tr);
                               });
 
@@ -966,16 +818,22 @@
                               table = $('#documentsdigitalized');
                               $( data ).each(function( index,value ) {
                                 var obj = JSON.parse(value);
-                                var tr  = $("<tr style='cursor:pointer;' class='even pointer' doc='"+obj.doc_id+"' >");
-                                tr.append('<td class="a-center"><input type="checkbox" class="flat check" value="'+obj.doc_id+'"  name="table_records"></td>');
-                                tr.append("<td class='selectDocument' >"+obj.doc_serial+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
+                                var tr  = $("<tr style='cursor:pointer;' id='doc"+obj.doc_id+"' class='doc even pointer' doc='"+obj.doc_id+"' >");
+                                tr.append('<td class="a-center"><input    type="checkbox" class="flat check" id="'+obj.doc_id+'"  value="'+obj.doc_salenumber+' | Tipo: '+obj.doc_ordertype+' "  name="table_records"></td>');
                                 tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
+                                tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
+                                tr.append("<td class='selectDocument' >"+obj.doc_ftls+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
-                                $("#documentsOk").append(tr);
+                                tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> <?php if (isSupervisor()):?> <button type='button' data-target='.catchModal' data-toggle='modal' class='btn btn-warning btn-xs catchAction' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-warning-sign' ></span></button><?php endif;?></td>");
+                                table.append(tr);
+
+                                //table.append(tr);
+
                               });
+                              break;
+                            case 4:
+                              $("#filter").trigger('submit');
 
                             break;
 
@@ -1002,10 +860,92 @@
                $(".even").removeClass("active");
                $(this).parent().addClass("active");
             });
+            var doc;
+            $(document).on('click','.catchAction',function(){
+              doc = $(this).attr('doc');
+            });
 
+            $("#catchForm").submit(function(){
+              var dataForm   = $(this).serialize();
+
+              $.ajax({
+                "type":"GET",
+                "dataType":"json",
+                "cache":false,
+                "data":{documents: doc},
+                "url":"<?=site_url('Contingency/create?')?>"+dataForm,
+                beforeSend:function(){
+                    $("body").css("cursor",'wait');
+                    $(".infoReceive").empty();
+                },
+                success:function(data){
+                  var success =  data.success;
+                  var errors  =  data.errors;
+                  if(typeof success != 'undefined' ){
+                      $("#catchMessage").html("<p class='alert alert-success'>"+success+"</p>");
+                  }
+                  if(typeof errors != 'undefined' ){
+                    $("#catchMessage").html("<p class='alert alert-danger'>"+errors+"</p>");
+                  }
+                },
+                complete:function(){
+                    $("body").css("cursor",'initial');
+
+                }
+              });
+              return false;
+            });
+
+            $("#filter").submit(function(){
+              var dataForm = $(this).serialize();
+              table = $('#documentsHistoric');
+              $.ajax({
+                type:"get",
+                dataType:"json",
+                url:'<?=site_url("Document/historicDocuments")?>',
+                data:dataForm,
+                beforeSend:function(){
+                  $("body").css("cursor",'wait');
+                  $('#documentsHistoric tbody').empty();
+                },
+                success:function(data){
+
+                  if(typeof data != 'undefined'){
+                     table.show();
+
+                      $( data.documents ).each(function( index,obj ) {
+
+                        //var obj = JSON.parse(value);
+                        var tr  = $("<tr style='cursor:pointer;' id='doc"+obj.doc_id+"' class='doc even pointer' doc='"+obj.doc_id+"' >");
+                        tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
+                        tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
+                        tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
+                        tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
+                        tr.append("<td class='selectDocument' >"+obj.doc_datedigrecepcionfac+"</td>");
+                        tr.append("<td class='selectDocument' >"+obj.doc_dateradicacionfact+"</td>");
+                        tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
+                        tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> </td>");
+                        table.append(tr);
+                    });
+                  }else{
+                     table.hide();
+
+                  }
+
+                },
+                complete:function(){
+                  $("body").css("cursor",'default');
+                }
+
+              });
+              return  false;
+            });
+
+            //$("#filter").trigget
                //fechas
             var diasRadicacion = {"C01":9,"C02":9,"C03":9,"C04":9,"C05":9,"C06":9,"C07":9,"C08":9,"C09":9,"C10":9,"C11":9,"C12":9,"C13":3,"ISLA DE PASCUA ISLA DE PASCUA":9,"C16":9};
 
+            /* SE EVALUARÁ  INCORPORAR
             $(document).on('click','.radicacion',function(){
               var selected = $(this).attr("id");
               switch(selected){
@@ -1033,14 +973,14 @@
             $("#city").change(function(){
               $('.radicacion input:checked').trigger('click');
             });
-
+            */
 
             //filtros and check all
             (function ($) {
                 $('.filtro').keyup(function () {
                     var rex = new RegExp($(this).val(), 'i');
-                    $('tbody tr').hide();
-                    $('tbody tr').filter(function () {
+                    $('.documents tbody tr').hide();
+                    $('.documents tbody tr').filter(function () {
                         return rex.test($(this).text());
                     }).show();
                 })
@@ -1057,12 +997,13 @@
               }
             });
             $('.sortable')
-              .wrapInner('<span title="Ordenar columna"/>')
+              .wrapInner('<span style="cursor:ns-resize" title="Ordenar columna"/>')
               .each(function(){
                 var th = $(this),
                     thIndex = th.index(),
                     inverse = false;
                 th.click(function(){
+
                     table.find('td').filter(function(){
                         return $(this).index() === thIndex;
                     }).sortElements(function(a, b){

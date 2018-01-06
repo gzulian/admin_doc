@@ -11,7 +11,7 @@
 <div class="right_col" role="main">
   <div class="page-title">
     <div class="title_left">
-    <h3>Mantenedor de usuarios</h3>
+    <h3>Mantenedor de motivos</h3>
     </div>
   </div>
   <div class="clearfix"></div>
@@ -22,26 +22,22 @@
           <div class="x_content padded">
               <div class="row">
                 <div class="col-md-12">
-                <button  data-target='#viewUser' data-toggle='modal' type="button" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Nuevo usuario</button>
+                <button  data-target='#viewUser' data-toggle='modal' type="button" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Nuevo motivo</button>
 <table class="table table-responsive"  id="dataTables">
                     <thead>
                       <tr>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Perfiles</th>
-                        <th>Estado</th>
-                        <th>Editar</th>
+                        <th>#</th>
+                        <th>Descripción</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-<?php foreach ($users as $user):?>
+<?php foreach ($motives as $motive):?>
 
                         <tr>
-                          <td><?=$user->get('use_name')?></td>
-                          <td><?=$user->get('use_email')?></td>
-                          <td><?=implode(",",$user->getPermissionArray())?></td>
-                          <td><?=$user->getStatus()?></td>
-                          <td><button data-target='#viewUser' data-toggle='modal' type="button" class="edit btn btn-xs btn-info" id="<?=$user->get('use_id')?>"><span class="glyphicon glyphicon-edit"></span></button></td>
+                          <td><?=$motive->mot_id?></td>
+                          <td><?=$motive->mot_name?></td>
+                          <td><button data-target='#viewUser' data-toggle='modal' type="button" class="edit btn btn-xs btn-info" id="<?=$motive->mot_id?>"><span class="glyphicon glyphicon-edit"></span></button></td>
                         </tr>
 <?php endforeach?>
 </tbody>
@@ -60,21 +56,15 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" style="font-size: 20px;" class="closeModal close glyphicon glyphicon-remove "></span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Recepción de documentos </h4>
+                <h4 class="modal-title" id="myModalLabel">Motivos </h4>
               </div>
               <div class="modal-body" >
                   <form method="post" id="form"> 
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <div class="form-group">
-                          <label class="col-md-2" for="name">Nombre</label>
-                          <input class="form-control" type="text" name="userData[use_name]" id="name">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="col-md-2" for="email">Email</label>
-                          <input class="form-control " type="text" name="userData[use_email]" id="email">
+                          <label class="col-md-2" for="name">Descripción</label>
+                          <input class="form-control" type="text" name="motData[mot_name]" id="name">
                         </div>
                       </div>
                     </div>
@@ -82,21 +72,10 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="col-md-2" for="name">Estado</label>
-                          <select name="userData[use_status]" id="status" class="form-control">
+                          <select name="motData[mot_status]" id="status" class="form-control">
                             <option value="0">INHABILITADO</option>
                             <option value="1">HABILITADO</option>
                           </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="email">Perfiles: </label><br>
-                          Administrador
-                          <input   class="check" type="checkbox" name="profile[]" id="p1" value="1">
-                          Asistente
-                          <input   class="check" type="checkbox" name="profile[]" id="p2" value="2">
-                          Supervisor
-                          <input   class="check" type="checkbox" name="profile[]" id="p3" value="3">
                         </div>
                       </div>
                     </div>
@@ -106,9 +85,8 @@
                       </div>
                     </div>
                     <!-- button title="Reset" type="button" id="reset" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-repeat"></span> Reinicar clave</button -->
-                    <i>*Clave por defecto : 123456</i>
                     <button title="Guardar" type="submit" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></button>
-                    <input id="id" type="hidden" name="userData[use_id]" value="">
+                    <input id="id" type="hidden" name="motData[mot_id]" value="">
                   </form>
               </div>
             </div>
@@ -160,7 +138,7 @@
          $.ajax({
             type:'get',
             dataType:'json',
-            url:'<?=site_url("user/save")?>/',
+            url:'<?=site_url("contingency/saveMotive")?>/',
             data:formData,
             beforeSend:function(){
                $("body").css("cursor",'wait');
@@ -191,19 +169,15 @@
           $.ajax({
             type:'POST',
             dataType:'json',
-            url:'<?=site_url("user/find")?>/'+id,
+            url:'<?=site_url("contingency/findMotive")?>/'+id,
             beforeSend:function(){
                $("body").css("cursor",'wait');
             },
             success:function(data){
               
-              $("#name").val(data.user._columns.use_name);
-              $("#email").val(data.user._columns.use_email);
-              $("#id").val(data.user._columns.use_id);
-              $(data.profiles).each(function(i,value){
-                  $("#p"+value).prop("checked",true);
-              });
-              $("#status option[value='"+data.user._columns.use_status+"'] ").prop('selected',true);
+              $("#name").val(data.motive.mot_name);
+              $("#id").val(data.motive.mot_id);
+              $("#status option[value='"+data.motive.mot_status+"'] ").prop('selected',true);
             },
             complete:function(){
                $("body").css("cursor",'default');

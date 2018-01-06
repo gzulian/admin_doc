@@ -1,0 +1,45 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class  Catch  extends CI_Controller {
+
+	public function __construct() {
+		parent::__construct();
+		if ($this->user = $this->session->userdata('logged_in')) {
+			$this->load->model('Catch_model', 'provider', true);
+			$this->load->helper('makedate');
+		} else {
+			redirect('Login/index', 'refresh');
+		}
+		//Do your magic here
+	}
+	public function create() {
+		$response = array();
+		if (isset($_REQUEST['catchData'])) {
+			$catchData = $_REQUEST['catchData'];
+			if (!is_null($motive = $this->motive->findById($catchData['motive'])) && !is_null($responsable = $this->responsable->findById($catchData['responsable'])) && !is_null($document = $this->document->findById($catchData['document']))) {
+				$now   = new DateTime();
+				$catch = $this->catch->create(array(
+						'cat_mot_id' => $motive->get('mot_id'),
+						'cat_res_id' => $responsable->get('res_id'),
+						'cat_date'   => $now->format('Y-m-d H:i:s')),
+					'cat_sta_id'  => $document->get('doc_status'),
+					'cat_obs'     => $catchData['obs'],
+					'cat_use_id'  => $this->user['id'],
+					'cat_doc_id'  => $document->get('doc_id')
+				);
+				$catch->save();
+				$response['success'] = "Registro creado con éxito ";
+			} else {
+				$response['error'] = "Error al crear el registro ";
+			}
+		} else {
+			$response['error'] = "Error al crear el registro ";
+		}
+		echo json_encode($response);
+	}
+
+}
+
+/* End of file Catch.php */
+/* Location: ./application/controllers/Catch.php */
