@@ -94,10 +94,10 @@ class Dashboard extends CI_Controller {
 		$docsByResponsable = Document_model::$type;
 		$query             = "
 			select count(doc_id) AS total ,
-			if(doc_status = 1,'SAC', if(doc_carrier ='FASTCO','FASTCO',if(doc_carrier='TLS','TLS','') )) as operador,
+			if(doc_status = 1,'SAC', if(doc_carrier ='FASTCO','FASTCO',if(doc_carrier='TLS','TLS',if(doc_status = 0,'LOGISTICA','')))) as operador,
 			if (doc_ordertype in ('SO', 'SZ', 'SU', 'DQ','SA'), 'Factura',
 			if(doc_ordertype in ('CF', 'CO'),'Nota de Crédito',
-			if(doc_ordertype in ('DA'), 'Nota de débito' ,doc_ordertype ) ) ) as tipo from rrf_document where doc_status in (1,2)
+			if(doc_ordertype in ('DA'), 'Nota de débito' ,doc_ordertype ) ) ) as tipo from rrf_document where doc_status in (0,1,2)
 			group by  Tipo,operador";
 
 		$result = $this->db->query($query);
@@ -122,7 +122,13 @@ class Dashboard extends CI_Controller {
 				$docsByResponsable[$key]['FASTCO'] = 0;
 
 			}
+			if (!isset($docsByResponsable[$key]['LOGISTICA'])) {
+				$docsByResponsable[$key]['LOGISTICA'] = 0;
+
+			}
+
 		}
+		$data['totalLOG']          = $docsByResponsable['Factura']['LOGISTICA']+$docsByResponsable['G. Despacho']['LOGISTICA']+$docsByResponsable['Nota de Débito']['LOGISTICA']+$docsByResponsable['Nota de Crédito']['LOGISTICA'];
 		$data['totalTLS']          = $docsByResponsable['Factura']['TLS']+$docsByResponsable['G. Despacho']['TLS']+$docsByResponsable['Nota de Débito']['TLS']+$docsByResponsable['Nota de Crédito']['TLS'];
 		$data['totalFASTCO']       = $docsByResponsable['Factura']['FASTCO']+$docsByResponsable['G. Despacho']['FASTCO']+$docsByResponsable['Nota de Débito']['FASTCO']+$docsByResponsable['Nota de Crédito']['FASTCO'];
 		$data['totalSAC']          = $docsByResponsable['Factura']['SAC']+$docsByResponsable['G. Despacho']['SAC']+$docsByResponsable['Nota de Débito']['SAC']+$docsByResponsable['Nota de Crédito']['SAC'];

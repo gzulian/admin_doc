@@ -28,6 +28,7 @@
                       <tr>
                         <th>#</th>
                         <th>Descripción</th>
+                        <th>Estado</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -37,6 +38,7 @@
                         <tr>
                           <td><?=$motive->mot_id?></td>
                           <td><?=$motive->mot_name?></td>
+                          <td><?=($motive->mot_status == 1)? "HABILITADO" : "INHABILITADO";?></td>
                           <td><button data-target='#viewUser' data-toggle='modal' type="button" class="edit btn btn-xs btn-info" id="<?=$motive->mot_id?>"><span class="glyphicon glyphicon-edit"></span></button></td>
                         </tr>
 <?php endforeach?>
@@ -162,7 +164,7 @@
 
          return false;
       });
-      $(".edit").click(function(){
+      $(document).on('click','.edit',function(){
         var id = $(this).attr("id");
         if(typeof id != 'undefined'){
           $('.check').prop("checked",false); 

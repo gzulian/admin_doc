@@ -16,6 +16,9 @@ if ( ! function_exists('dinamicMakeDate'))
         }elseif ($objectDate = DateTime::createFromFormat('d-m-Y', $date)) {
         	return $objectDate;
         	
+        }elseif($objectDate = DateTime::createFromFormat('Y-m-d', $date)){
+            return $objectDate;
+            
         }
 
     }   

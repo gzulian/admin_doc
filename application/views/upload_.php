@@ -67,10 +67,10 @@
                 <table id="table" class=" table-striped table table-responsive" >
                   <thead>
                     <tr>
-                      <th>NÂ° de orden</th>
+                      <th>N° de orden</th>
                       <th>Tipo orden</th>
-                      <th>NÂ° Legal</th>
-                      <th>GuÃ­as</th>
+                      <th>N° Legal</th>
+                      <th>Guías</th>
                       <th>Fecha documento</th>
                       <th>Cliente</th>
                       <th>Monto ($)</th>
@@ -133,7 +133,7 @@
       });
       */
     var table  = $("#table").DataTable( {"oLanguage": {
-        "sLengthMenu": "Mostrar _MENU_ registros por pÃ¡gina",
+        "sLengthMenu": "Mostrar _MENU_ registros por página",
         "sZeroRecords": "Sin resultados",
         "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
         "sInfoEmpty": "",
@@ -141,7 +141,7 @@
         "sSearch":"Buscar:  ",
         "oPaginate": {
         "sFirst":      "Primera",
-        "sLast":       "Ãšltima",
+        "sLast":       "Última",
         "sNext":       "Sig",
         "sPrevious":   "Anteriror"
         }

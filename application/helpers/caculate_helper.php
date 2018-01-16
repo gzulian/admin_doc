@@ -107,3 +107,23 @@ function estimatedDate($from, $days, $holidaysBD = array()) {
 	}
 	return $estimated;
 }
+function getDays($from, $holidaysBD = array()) {
+
+	$from = new DateTime($from);
+	$workingDays = [1, 2, 3, 4, 5];# date format = N (1 = Monday, ...)
+	$holidayDays = ['*-12-25', '*-01-01', '*-05-01', '*-05-21', '*-09-18', '*-09-19'];# variable and fixed holidays
+	$holidayDays = array_merge($holidayDays, $holidaysBD);
+	$interval = new DateInterval('P1D');
+	$periods  = new DatePeriod($from, $interval, new DateTime() );
+	$daysa    = 0;
+	foreach ($periods as $period) {
+		if (!in_array($period->format('N'), $workingDays)) {continue;
+		}
+		if (in_array($period->format('Y-m-d'), $holidayDays)) {continue;
+		}
+		if (in_array($period->format('*-m-d'), $holidayDays)) {continue;
+		}
+		$daysa++;
+	}
+	return $daysa;
+}

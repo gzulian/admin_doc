@@ -7,13 +7,17 @@
     .nav-tabs li.disabled a:hover { border-color: transparent; }
 
 .glyphicon {
-    font-size: 16px;
+    font-size: 14px;
 }
-
+.glyphicon-sort{
+  font-size: 8px !important; 
+}
 td{
   color: #000;
 }
-
+.headings{
+  font-size: 11px !important;
+}
 </style>
 <link rel="stylesheet" type="text/css" href="<?=base_url('resources/js/datepicker/timepicker.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('resources/js/jquery-ui/jquery-ui.min.css')?>">
@@ -66,10 +70,13 @@ td{
                             <thead>
                               <tr class="headings">
                                 <th>  <input type="checkbox" id="check-all" class="check-all"></th>
-                                <th class="column-title sortable">Tipo  <span class="glyphicon glyphicon-sort"></span></th>
+                                <th class="column-title sortable">N° Orden <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title sortable">N° Factura <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title sortable">N° Guía <span class="glyphicon glyphicon-sort"></span></th>
+                                <th class="column-title sortable">N° Oc <span class="glyphicon glyphicon-sort"></span></th>
+                                <th class="column-title sortable">Tipo  <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Fecha <span class="glyphicon glyphicon-sort"></span></th>
+                                <th class="column-title sortable">Estiamación Log a SAC <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Cliente <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title">Ver </th>
                               </tr>
@@ -102,10 +109,11 @@ td{
                             <thead>
                               <tr class="headings">
                                 <th>  <input type="checkbox" id="check-all" class="check-all"></th>
+                                <th class="column-title sortable">N° Orden <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title sortable">N° Factura <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title sortable">N° Guía <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Tipo  <span class="glyphicon glyphicon-sort"></span></th>
-                                <th class="column-title sortable">Fecha documento <span class="glyphicon glyphicon-sort"></span></th>
+                                <th class="column-title sortable">F. estimda  Log a SAC  <span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Fecha recepción<span class="glyphicon glyphicon-sort"></span></th>
                                 <th class="column-title sortable">Cliente <span class="glyphicon glyphicon-sort"></span> </th>
                                 <th class="column-title">Ver </th>
@@ -332,7 +340,7 @@ td{
                                   <tr>
                                     <th class="text-lefth" >Observación SAC:</th>
                                     <td class="text-lefth" >
-                                      <input type="text"  class="form-control" value="" id="obsSac" name="dataForm[obsSac]">
+                                      <input type="text"  class="form-control" value="" req="req" id="obsSac" name="dataForm[obsSac]">
                                     </td>
                                   </tr>
 
@@ -687,7 +695,7 @@ td{
                 var validate   = true;
                 $.each($('input', $(this) ),function(k){
 
-                    if($(this).val().trim().length == 0){
+                    if(typeof $(this).attr("req") == 'undefined'  &&   $(this).val().trim().length == 0){
                       validate  = false;
                       $(this).attr('placeholder',"Requerido")
                     }
@@ -767,12 +775,15 @@ td{
                               var tr  = $("<tr style='cursor:pointer;' id='doc"+obj.doc_id+"' class='doc even pointer' doc='"+obj.doc_id+"' >");
                               tr.append('<td class="a-center"><input    type="checkbox" class="flat check" id="'+obj.doc_id+'"  value="'+obj.doc_salenumber+' | Tipo: '+obj.doc_ordertype+' "  name="table_records"></td>');
                               //tr.append("<td class='selectDocument' >"+obj.doc_serial+"</td>");
-                              tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
-                              tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
-                              tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
-                              tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
-                              tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
-                              tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> <?php if (isSupervisor()):?> <button type='button' data-target='.catchModal' data-toggle='modal' class='btn btn-warning btn-xs catchAction' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-warning-sign' ></span></button><?php endif?></td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+obj.doc_ordernumber+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+obj.doc_salenumber+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+obj.doc_guidenumber+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+obj.doc_saleorder+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+obj.doc_ordertype+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+moment(obj.doc_facdate).format('MM/DD/YYYY')+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+moment(obj.doc_datelogtosacstimated).format('MM/DD/YYYY')+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+obj.doc_customer+"</td>");
+                              tr.append("<td style='word-wrap:break-word' class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> <?php if (isSupervisor()):?> <button type='button' data-target='.catchModal' data-toggle='modal' class='btn btn-warning btn-xs catchAction' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-warning-sign' ></span></button><?php endif?></td>");
                               table.append(tr);
                             });
                           break;
@@ -783,11 +794,14 @@ td{
                                 var obj = JSON.parse(value);
                                 var tr  = $("<tr style='cursor:pointer;' id='doc"+obj.doc_id+"' class='doc even pointer' doc='"+obj.doc_id+"' >");
                                 tr.append('<td class="a-center"><input    type="checkbox" class="flat check" id="'+obj.doc_id+'"  value="'+obj.doc_salenumber+' | Tipo: '+obj.doc_ordertype+' "  name="table_records"></td>');
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+obj.doc_ordernumber+"</td>");
+
                                 tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_datelogtosac+"</td>");
+                                tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+moment(obj.doc_datelogtosacstimated).format('MM/DD/YYYY')+"</td>");
+                                
+                              tr.append("<td style='word-wrap:break-word' class='selectDocument' >"+moment(obj.doc_datelogtosac).format('MM/DD/YYYY')+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
                                 tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> <?php if (isSupervisor()):?> <button type='button' data-target='.catchModal' data-toggle='modal' class='btn btn-warning btn-xs catchAction' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-warning-sign' ></span></button><?php endif;?></td>");
                                 table.append(tr);
@@ -802,8 +816,8 @@ td{
                                 tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_fradicacion+"</td>");
-                                tr.append("<td class='selectDocument' >"+obj.doc_dateradicacion+"</td>");
+                                tr.append("<td class='selectDocument' >"+moment(obj.doc_fradicacion).format('MM/DD/YYYY')+"</td>");
+                                tr.append("<td class='selectDocument' >"+moment(obj.doc_dateradicacion).format('MM/DD/YYYY')+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_city+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_carrier+"</td>");
                                 tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
@@ -920,9 +934,9 @@ td{
                         tr.append("<td class='selectDocument' >"+obj.doc_salenumber+"</td>");
                         tr.append("<td class='selectDocument' >"+obj.doc_guidenumber+"</td>");
                         tr.append("<td class='selectDocument' >"+obj.doc_ordertype+"</td>");
-                        tr.append("<td class='selectDocument' >"+obj.doc_documentdate+"</td>");
-                        tr.append("<td class='selectDocument' >"+obj.doc_datedigrecepcionfac+"</td>");
-                        tr.append("<td class='selectDocument' >"+obj.doc_dateradicacionfact+"</td>");
+                        tr.append("<td class='selectDocument' >"+moment(obj.doc_facdate).format('MM/DD/YYYY')+"</td>");
+                        tr.append("<td class='selectDocument' >"+moment(obj.doc_datedigrecepcionfac).format('MM/DD/YYYY')+"</td>");
+                        tr.append("<td class='selectDocument' >"+moment(obj.doc_dateradicacionfact).format('MM/DD/YYYY')+"</td>");
                         tr.append("<td class='selectDocument' >"+obj.doc_customer+"</td>");
                         tr.append("<td class=''><button type='button' data-target='.documentDetail' data-toggle='modal' class='btn btn-info btn-xs viewDoscument' doc='"+obj.doc_id+"'><span class='glyphicon glyphicon-search' ></span></button> </td>");
                         table.append(tr);

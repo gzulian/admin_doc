@@ -64,21 +64,26 @@
                         <th>Cliente</th>
                         <th>Tipo de documento</th>
                         <th>Fecha de inicio</th>
-                        <th>Fecha Término</th>
+                        <th>Fecha estimada retorno</th>
                         <th>Tiempo ciclo</th>
+                        <th>Retraso</th>
                       </tr>
                     </thead>
                     <tbody>
-<?php foreach ($documents as $document):?>
+<?php 
+  foreach ($documents as $document):?>
 
                         <tr>
                           <td><?=$document->doc_ordernumber?></td>
                           <td><?=$document->doc_month?></td>
                           <td><?=$document->doc_customer?></td>
                           <td><?=$document->doc_ordertype?></td>
-                          <td><?=$document->doc_documentdate?></td>
-                          <td><?=$document->doc_documentdate?></td>
-                          <td><?=$document->doc_daysets?></td>
+                          <td><?=dinamicMakeDate($document->doc_facdate)->format('d-m-Y')?></td>
+                          <td><?=dinamicMakeDate($document->doc_datelogtosacstimated)->format('d-m-Y')?></td>
+                          <?php  $daysSet = getDays($document->doc_facdate, $holidays);?>
+                          <td><?=$daysSet?> días</td>
+                          <?php  $daysSet = getDays($document->doc_datelogtosacstimated, $holidays);?>
+                          <td><?=$daysSet-1?> días</td>
                         </tr>
 <?php endforeach?>
 </tbody>

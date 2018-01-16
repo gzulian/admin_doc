@@ -68,11 +68,12 @@ class Document_model extends CI_Model {
 		'doc_carrier'             => '',
 		'doc_datelogtosacstimated'=> ''
 	);
-	protected static $_table = 'rrf_document';
-	public static $_datetype = array('doc_datelogtosac', 'doc_dateradicacion', 'doc_datedigi', 'doc_datedigrecepcionfac');
-	public  static $orderType = array('C01','C02','C03','C04','C05','C06','C07','C08','C09','C10','C11','C12','C16','ISLA DE PASCUA');
-	public static $type   = array("Factura" => array(), "Nota de Crédito" => array(), "Nota de Débito" => array(), "G. Despacho" => array());
-	public static $status = array(0         => "Cargado", 1         => "Recepcionado", 2         => "Radicado", 3         => "Retornado", 4         => "Digitalizado", 5         => "Retornado fuera de plazo");
+	protected static $_table  = 'rrf_document';
+	public static $_datetype  = array('doc_datelogtosac', 'doc_dateradicacion', 'doc_datedigi', 'doc_datedigrecepcionfac');
+	public  static $cities    = array('C01','C02','C03','C04','C05','C06','C07','C08','C09','C10','C11','C12','C13','C16','ISLA DE PASCUA');
+	public  static $orderType = array('SO','SZ','SU','DQ','CF','CO');
+	public static $type       = array("Factura" => array(), "Nota de Crédito" => array(), "Nota de Débito" => array(), "G. Despacho" => array());
+	public static $status     = array(0         => "Cargado", 1         => "Recepcionado", 2         => "Radicado", 3         => "Retornado", 4         => "Digitalizado", 5         => "Retornado fuera de plazo");
 	public function findAll($where = array(), $json = false) {
 		$this->load->database();
 		$result = null;

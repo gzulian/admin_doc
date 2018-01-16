@@ -117,7 +117,7 @@ class Document extends CI_Controller {
 					break;
 
 				default:
-					echo "mal";
+					//echo "mal";
 					break;
 			}
 		}
@@ -181,26 +181,27 @@ class Document extends CI_Controller {
 				foreach ($documents as $id) {
 					$document = $this->document->findById($id);
 					if (!is_null($document)) {
-						if ($document->get('doc_status') == 1) {
+						if ($document->get('doc_status') == 1 && ($radicacion['send']=="SI" || $radicacion['send'] == "NO")) {
+							
 							#agregar fecha de FECHA ESTIMADA FACTURA DE TLS para redicación
 							$document->set('doc_radicacion', $radicacion['send']);
 							$document->set('doc_obssac', $radicacion['obsSac']);
 							if ($radicacion['send'] == 'NO') {
-								$document->set('doc_dateradicacion', dinamicMakeDate($document->get('doc_documentdate'))->format('Y-m-d'));
+								//var_dump(new DateTime($document->get('doc_facdate')));
+								$dateRadicacion  = new DateTime($document->get('doc_facdate'));
+								$document->set('doc_dateradicacion', $dateRadicacion->format('Y-m-d'));
 								$document->set('doc_status', 3);
-								$success[] = "Documento ".$document->get('doc_salenumber')." a espera de digitalización ";
-
+								$success[] = "Documento ".$document->get('doc_salenumber')." a espera de digitalizacion ";
 							} else {
 								$document->set('doc_status', 2);
-								$document->set('doc_fradicacion', dinamicMakeDate($radicacion['date'])->format('Y-m-d'));
-
+								$dateRadicacion  = new DateTime($radicacion['date']);
+								$document->set('doc_fradicacion', $dateRadicacion->format('Y-m-d'));
 								#aplicar formula
-
 								$to = stimateReturn(dinamicMakeDate($radicacion['date']), $document->get('doc_city'), $holyDaysDB);
 								$document->set('doc_dateradicacion', $to->format('Y-m-d'));
 								/* fin formula*/
 								$document->set('doc_carrier', $radicacion['doc_transport']);
-								$success[] = "Documento ".$document->get('doc_salenumber')." en proceso de radicación ";
+								$success[] = "Documento ".$document->get('doc_salenumber')." en proceso de radicacion ";
 							}
 							$document->save();
 							$ok[]         = $document->get('doc_id');
@@ -208,7 +209,7 @@ class Document extends CI_Controller {
 							$register     = $this->register->create($registerData);
 							$register->save();
 						} else {
-							$errors[] = 'Este documento: '.$document->get('doc_salenumber').' ya se encuentra en proceso de radicación desde el: '.$document->get('doc_fradicacion');
+							$errors[] = 'Este documento: '.$document->get('doc_salenumber').' ya se encuentra en proceso de radicacion desde el: '.$document->get('doc_fradicacion');
 						}
 					} else {
 						$errors[] = 'El documento:'.$id.' no existe ';
@@ -220,10 +221,10 @@ class Document extends CI_Controller {
 		} else {
 			$errors[] = 'Debes seleccionar a lo menos un documento';
 		}
-
 		$response['errors']  = $errors;
 		$response['success'] = $success;
 		$response['ok']      = $ok;
+		//print_r($response);
 		echo json_encode($response);
 	}
 
@@ -371,12 +372,111 @@ class Document extends CI_Controller {
 	}
 
 	public function upload() {
+		
+		$response  = array();
+
+		if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
+
+			$flag   = true;
+			$rows   = 0;
+			$errors = array();
+			$successfile = 0;
+
+			//number_of_working_days($from,);
+			//'application/vnd.ms-excel',
+
+			$mimes = array('text/plain', 'text/csv', 'text/tsv');
+
+			if (in_array($_FILES['file']['type'], $mimes) && ($gestor = fopen($_FILES['file']['tmp_name'], "r")) !== FALSE) {
+				$documents = array();
+				$holyDaysDB               = $this->holiday->findAll(array(), true);
+				function isZero($value){return $value >=0;}
+				while (($datos = fgetcsv($gestor, 4000, ";")) !== FALSE) {
+					if ($flag) {$flag = false;continue;}
+					$rows++;
+					
+					if (count(array_filter($datos,'isZero')) == 16 && is_numeric($datos[6]) && is_numeric($datos[3]) ) {
+						$document = $this->document->findByFolio($datos[6]); // busqueda por numero legal
+						if (is_null($document) ) {
+							$doc_facdate              = dinamicMakeDate($datos[5]);
+							$doc_datelogtosacstimated = stimateDateLogicToSac($doc_facdate, $datos[0], $holyDaysDB);
+							$provider                 = $this->provider->findByName(utf8_encode($datos[1]));
+							if (is_null($provider)) {
+								$providerData = array('pro_name' => $datos[1], 'pro_nameTwo' => $datos[2], 'pro_datesys' => date('Y-m-d H:i:s'));
+								$provider     = $this->provider->create($providerData);
+								$provider->save();
+							}
+
+							if(in_array($datos[0], Document_model::$cities)){
+								if(in_array($datos[4], Document_model::$orderType)){
+									$rowData = array(
+										//datos base
+										'doc_status' => 0,
+										'doc_datesys'             => date('Y-m-d H:i:s'),
+										'doc_pro_id'              => $provider->get('pro_id'),
+										'doc_city'                => $datos[0],
+										'doc_customer'            => $datos[1],
+										'doc_customerTwo'         => $datos[2],
+										'doc_ordernumber'         => $datos[3],
+										'doc_ordertype'           => $datos[4],
+										'doc_facdate'             => ($doc_facdate)?$doc_facdate->format('Y-m-d'):"", //fecha
+										'doc_salenumber' 		  => $datos[6],
+										'doc_guidenumber'         => $datos[7],
+										'doc_causal'         	  => $datos[8], //número de línea
+										'doc_saleorder'           => $datos[9],
+										'doc_responsible'         => $datos[10],//transaccion
+										'doc_monto'               => $datos[11],
+										'doc_montousd'            => $datos[12],
+										'doc_transport'           => $datos[13],
+										'doc_depot'               => $datos[14],
+										'doc_month'               => $datos[15],
+										'doc_datelogtosacstimated' => $doc_datelogtosacstimated->format('Y-m-d')
+									);
+									$document = $this->document->create($rowData);
+									$document->save();
+									$documents[] = $document;
+
+									$registerData = array("reg_doc_id" => $document->get('doc_id'), "reg_use_id" => $this->user['id'], "reg_sta_id" => 0, "reg_date" => date("Y-m-d H:i:s"));
+									$register     = $this->register->create($registerData);
+									
+									$register->save();
+									$successfile++;
+								}else{
+									$errors[] = "Fila ".$rows." no insertada, el tipo de documento: ".$datos[4]." no existe";
+								}
+							}else{
+								$errors[] = "Fila ".$rows." no insertada, código de ciudad : ".$datos[0]." no existe";
+							}
+
+						} else {
+							$errors[] = "Fila ".$rows." no insertada, la factura: ".$document->get('doc_salenumber')." ya está ingresada";
+						}
+					}	 else {
+						$errors[] = "Fila ".$rows." no insertada, existen campos vacíos";
+					}
+				}
+				$data['errors'] = $errors;
+				fclose($gestor);
+				if($successfile >  0){
+					$response['success']   = $successfile." documentos cargados exitosamente";
+					$response['documents'] = $documents;
+				}
+				//$response['documents'] = $documents;
+			} else {
+				$errors['errors'] = "Documento inválido";
+			}
+
+			$response['errors'] = $errors;
+			
+
+		}
+		$data['response'] = $response;
 		$data['active'] = "document2";
 		$data['user']   = $this->user;
 
 		$this->load->view('header', $data);
 		$this->load->view('upload', $data, FALSE);
-		$this->load->view('footer', $data, FALSE);
+		$this->load->view('footer', '$data', FALSE);
 	}
 	public function historicDocuments() {
 
@@ -407,203 +507,6 @@ class Document extends CI_Controller {
 		if ($result->num_rows() > 0) {
 			$data['documents'] = $result->result_array();
 			echo json_encode($data);
-		}
-
-	}
-	public function uploadAjax() {
-
-		if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
-			$flag   = true;
-			$rows   = 0;
-			$errors = array();
-
-			//number_of_working_days($from,);
-			//'application/vnd.ms-excel',
-
-			$mimes = array('text/plain', 'text/csv', 'text/tsv');
-
-			if (in_array($_FILES['file']['type'], $mimes) && ($gestor = fopen($_FILES['file']['tmp_name'], "r")) !== FALSE) {
-				$documents = array();
-				$holyDaysDB = $this->holiday->findAll(array(), true);
-				
-				while (($datos = fgetcsv($gestor, 100, ";")) !== FALSE) {
-
-					if ($flag) {$flag = false;continue;}
-					$rows++;
-					if (count($datos) == 39 && is_numeric($datos[7])) {
-						$document = $this->document->findByFolio($datos[7]);
-						if (is_null($document)) {
-							$doc_fsac                = dinamicMakeDate($datos[18]);
-							$doc_fradicacion         = dinamicMakeDate($datos[23]);
-							$doc_facdate             = dinamicMakeDate($datos[34]);
-							$doc_guidedate           = dinamicMakeDate($datos[35]);
-							$doc_ftls                = dinamicMakeDate($datos[25]);
-							$doc_documentdate        = dinamicMakeDate($datos[6]);
-							$doc_datelogtosac        = dinamicMakeDate($datos[18]);
-							$doc_datetls             = dinamicMakeDate($datos[28]);
-							$doc_dateradicacion      = dinamicMakeDate($datos[31]);
-							$doc_dateradicacionfact  = dinamicMakeDate($datos[34]);
-							$doc_datedigi            = dinamicMakeDate($datos[35]);
-							$doc_datedigrecepcionfac = dinamicMakeDate($datos[36]);
-							$provider                = $this->provider->findByName($datos[2]);
-							if (is_null($provider)) {
-								$providerData = array('pro_name' => $datos[2], 'pro_nameTwo' => $datos[3], 'pro_datesys' => date('Y-m-d H:i:s'));
-								$provider     = $this->provider->create($providerData);
-								$provider->save();
-							}
-							$rowData = array(
-								'doc_serial' => $datos[7],
-								'doc_status' => 0,
-								//'doc_file'=>$datos[7],
-								'doc_datesys'             => date('Y-m-d H:i:s'),
-								'doc_customer'            => $datos[2],
-								'doc_customerTwo'         => $datos[3],
-								'doc_pro_id'              => $provider->get('pro_id'),
-								'doc_return'              => $datos[16],
-								'doc_radicacion'          => $datos[22],
-								'doc_fsac'                => ($doc_fsac)?$doc_fsac->format('Y-m-d'):"", //FECHA
-								'doc_fradicacion'         => ($doc_fradicacion)?$doc_fradicacion->format('Y-m-d'):"", //fecha
-								'doc_guidedate'           => ($doc_guidedate)?$doc_guidedate->format('Y-m-d'):"", //fecha
-								'doc_facdate'             => ($doc_facdate)?$doc_facdate->format('Y-m-d'):"", //fecha
-								'doc_obsbodega'           => $datos[17],
-								'doc_obssac'              => $datos[24],
-								'doc_ftls'                => ($doc_ftls)?$doc_ftls->format('Y-m-d'):"", //fecha
-								'doc_obstls1'             => $datos[29],
-								'doc_obstls2'             => $datos[30],
-								'doc_month'               => $datos[0],
-								'doc_city'                => $datos[1],
-								'doc_ordernumber'         => $datos[4],
-								'doc_ordertype'           => $datos[5],
-								'doc_documentdate'        => ($doc_documentdate)?$doc_documentdate->format('Y-m-d'):"", //fecha
-								'doc_salenumber'          => $datos[7],
-								'doc_guidenumber'         => $datos[8],
-								'doc_saleorder'           => $datos[10],
-								'doc_executive'           => $datos[11],
-								'doc_monto'               => $datos[12],
-								'doc_montousd'            => $datos[13],
-								'doc_transport'           => $datos[14],
-								'doc_depot'               => $datos[15],
-								'doc_datelogtosac'        => ($doc_datelogtosac)?$doc_datelogtosac->format('Y-m-d'):"", //fecha
-								'doc_daylogic'            => $datos[20],
-								'doc_logicstatus'         => $datos[21],
-								'doc_datetls'             => $datos[28], //date
-								'doc_daysets'             => $datos[26],
-								'doc_statussac'           => $datos[27],
-								'doc_dateradicacion'      => ($doc_dateradicacion)?$doc_dateradicacion->format('Y-m-d'):"", //fecha
-								'doc_daytls'              => $datos[32],
-								'doc_statusfastco'        => $datos[33],
-								'doc_dateradicacionfact'  => ($doc_dateradicacionfact)?$doc_dateradicacionfact->format('Y-m-d'):"", //fecha
-								'doc_datedigi'            => ($doc_datedigi)?$doc_datedigi->format('Y-m-d'):"", //fecha
-								'doc_datedigrecepcionfac' => ($doc_datedigrecepcionfac)?$doc_datedigrecepcionfac->format('Y-m-d'):"", //fecha
-								'doc_causal'              => $datos[37],
-								'doc_responsible'         => $datos[38],
-							);
-							$document = $this->document->create($rowData);
-							$document->save();
-							$documents[] = $document->toArray();
-						} else {
-							$errors[] = "Fila ".$rows." no insertada, la factura: ".$document->get('doc_serial')." ya está ingresada";
-						}
-					} else {
-						$errors[] = "Fila ".$rows." no insertada";
-					}
-				}
-				$data['errors'] = $errors;
-				fclose($gestor);
-				$response['documents'] = $documents;
-			} else {
-				$errors['errors'] = "Documento inválido";
-			}
-
-			$response['errors'] = $errors;
-			echo json_encode($response);
-			exit();
-		}
-
-	}
-	public function uploadAjax2() {
-
-		if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
-
-			$flag   = true;
-			$rows   = 0;
-			$errors = array();
-
-			//number_of_working_days($from,);
-			//'application/vnd.ms-excel',
-
-			$mimes = array('text/plain', 'text/csv', 'text/tsv');
-
-			if (in_array($_FILES['file']['type'], $mimes) && ($gestor = fopen($_FILES['file']['tmp_name'], "r")) !== FALSE) {
-				$documents = array();
-				$holyDaysDB               = $this->holiday->findAll(array(), true);
-				while (($datos = fgetcsv($gestor, 4000, ";")) !== FALSE) {
-
-					if ($flag) {$flag = false;continue;}
-					$rows++;
-					if (count($datos) == 14 && is_numeric($datos[6])) {
-						$document = $this->document->findByFolio($datos[6]); // busqueda por numero legal
-						if (is_null($document) ) {
-							$doc_facdate              = dinamicMakeDate($datos[5]);
-							$doc_datelogtosacstimated = stimateDateLogicToSac($doc_facdate, $datos[0], $holyDaysDB);
-							$provider                 = $this->provider->findByName($datos[1]);
-							if (is_null($provider)) {
-								$providerData = array('pro_name' => $datos[1], 'pro_nameTwo' => $datos[2], 'pro_datesys' => date('Y-m-d H:i:s'));
-								$provider     = $this->provider->create($providerData);
-								$provider->save();
-							}
-							if(in_array($datos[1], Document_model::$orderType)){
-								$rowData = array(
-									//datos base
-									'doc_status' => 0,
-									'doc_datesys'             => date('Y-m-d H:i:s'),
-									'doc_pro_id'              => $provider->get('pro_id'),
-									'doc_city'                => $datos[0],
-									'doc_customer'            => $datos[1],
-									'doc_customerTwo'         => $datos[2],
-									'doc_ordernumber'         => $datos[3],
-									'doc_ordertype'           => $datos[4],
-									'doc_facdate'             => ($doc_facdate)?$doc_facdate->format('Y-m-d'):"", //fecha
-									'doc_salenumber' 		  => $datos[6],
-									'doc_guidenumber'         => $datos[7],
-									'doc_causal'         	  => $datos[8], //número de línea
-									'doc_saleorder'           => $datos[9],
-									'doc_responsible'         => $datos[10],//transaccion
-									'doc_monto'               => $datos[11],
-									'doc_montousd'            => $datos[12],
-									'doc_transport'           => $datos[13],
-									'doc_depot'               => $datos[14],
-									'doc_month'               => $datos[15],
-									'doc_datelogtosacstimated' => $doc_datelogtosacstimated->format('Y-m-d')
-								);
-								$document = $this->document->create($rowData);
-								$document->save();
-								$documents[] = $document->toArray();
-
-								$registerData = array("reg_doc_id" => $document->get('doc_id'), "reg_use_id" => $this->user['id'], "reg_sta_id" => 0, "reg_date" => date("Y-m-d H:i:s"));
-								$register     = $this->register->create($registerData);
-								$register->save();
-							}else{
-								$errors[] = "Fila ".$rows." no insertada, la ciudad : ".$document->get('doc_city')." no existe";
-							}
-
-						} else {
-							$errors[] = "Fila ".$rows." no insertada, la factura: ".$document->get('doc_serial')." ya está ingresada";
-						}
-					} else {
-						$errors[] = "Fila ".$rows." no insertada";
-					}
-				}
-				$data['errors'] = $errors;
-				fclose($gestor);
-				$response['documents'] = $documents;
-			} else {
-				$errors['errors'] = "Documento inválido";
-			}
-
-			$response['errors'] = $errors;
-			echo json_encode($response);
-			exit();
 		}
 
 	}

@@ -24,7 +24,7 @@
   <div class="clearfix"></div>
   <div class="row top_tiles">
     <!--  backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'], -->
-    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <div class="tile-stats ">
           <div style="margin-right: 4px;" class="pull-right">
             <span class="chart" data-percent="<?=calculate($totalDocEnRadicacion, $docsByStatus['Factura'][2]['total'])?>">
@@ -36,19 +36,19 @@
         <p>$ <?=number_format($docsByStatus['Factura'][2]['monto'], 0, ',', '.')?></p>
       </div>
     </div>
-    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <!--div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <div class="tile-stats">
          <div style="margin-right: 4px;" class="pull-right">
-            <span class="chart" data-percent="<?=calculate($totalDocEnRadicacion, $docsByStatus['G. Despacho'][2]['total'])?>">
-              <span class="percent"><?=calculate($totalDocEnRadicacion, $docsByStatus['G. Despacho'][2]['total'])?></span>
+            <span class="chart" data-percent="<?//=calculate($totalDocEnRadicacion, $docsByStatus['G. Despacho'][2]['total'])?>">
+              <span class="percent"><?//=calculate($totalDocEnRadicacion, $docsByStatus['G. Despacho'][2]['total'])?></span>
             </span>
           </div>
-        <div class="count"><?=number_format($docsByStatus['G. Despacho'][2]['total'], 0, ',', '.')?></div>
+        <div class="count"><?//=number_format($docsByStatus['G. Despacho'][2]['total'], 0, ',', '.')?></div>
         <h3>G. despacho</h3>
-        <p>$ <?=number_format($docsByStatus['G. Despacho'][2]['monto'], 0, ',', '.')?></p>
+        <p>$ <?//=number_format($docsByStatus['G. Despacho'][2]['monto'], 0, ',', '.')?></p>
       </div>
-    </div>
-    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    </div-->
+    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <div class="tile-stats">
          <div style="margin-right: 4px;" class="pull-right">
             <span class="chart" data-percent="<?=calculate($totalDocEnRadicacion, $docsByStatus['Nota de Débito'][2]['total'])?>">
@@ -60,7 +60,7 @@
         <p>$ <?=number_format($docsByStatus['Nota de Débito'][2]['monto'], 0, ',', '.')?></p>
       </div>
     </div>
-    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
       <div class="tile-stats">
           <div style="margin-right: 4px;" class="pull-right">
             <span class="chart" data-percent="<?=calculate($totalDocEnRadicacion, $docsByStatus['Nota de Crédito'][2]['total'])?>">
@@ -96,41 +96,46 @@
                         <thead>
                           <tr>
                             <th>Responsable</th>
+                            <th>Logística</th>
+                            <th>SAC</th>
                             <th>TLS</th>
                             <th>FASTCO</th>
-                            <th>SAC</th>
                           </tr>
                         </thead>
                         <tbody>
                             <tr>
                               <th>Facturas</th>
+                              <td class="number"><?=number_format($docsByResponsable['Factura']['LOGISTICA'], 0, ',', '.')?></td>
+                              <td class="number"><?=number_format($docsByResponsable['Factura']['SAC'], 0, ',', '.')?></td>
                               <td class="number"><?=number_format($docsByResponsable['Factura']['TLS'], 0, ',', '.')?></td>
                               <td class="number"><?=number_format($docsByResponsable['Factura']['FASTCO'], 0, ',', '.')?></td>
-                              <td class="number"><?=number_format($docsByResponsable['Factura']['SAC'], 0, ',', '.')?></td>
                             </tr>
-                            <tr>
+                            <!--tr>
                               <th>G. Despacho</th>
-                              <td class="number"><?=number_format($docsByResponsable['G. Despacho']['TLS'], 0, ',', '.')?></td>
-                              <td class="number"> <?=number_format($docsByResponsable['G. Despacho']['FASTCO'], 0, ',', '.')?></td>
-                              <td class="number"> <?=number_format($docsByResponsable['G. Despacho']['SAC'], 0, ',', '.')?></td>
-                            </tr>
+                              <td class="number"><?//=number_format($docsByResponsable['G. Despacho']['TLS'], 0, ',', '.')?></td>
+                              <td class="number"> <?//=number_format($docsByResponsable['G. Despacho']['FASTCO'], 0, ',', '.')?></td>
+                              <td class="number"> <?//=number_format($docsByResponsable['G. Despacho']['SAC'], 0, ',', '.')?></td>
+                            </tr-->
                             <tr>
                               <th>N. Crédito</th>
+                              <td class="number"><?=number_format($docsByResponsable['Nota de Crédito']['LOGISTICA'], 0, ',', '.')?></td>
+                              <td class="number"> <?=number_format($docsByResponsable['Nota de Crédito']['SAC'], 0, ',', '.')?></td>
                               <td class="number"><?=number_format($docsByResponsable['Nota de Crédito']['TLS'], 0, ',', '.')?></td>
                               <td class="number"> <?=number_format($docsByResponsable['Nota de Crédito']['FASTCO'], 0, ',', '.')?></td>
-                              <td class="number"> <?=number_format($docsByResponsable['Nota de Crédito']['SAC'], 0, ',', '.')?></td>
                             </tr>
                             <tr>
                               <th>N. Débito</th>
+                              <td class="number"><?=number_format($docsByResponsable['Nota de Débito']['LOGISTICA'], 0, ',', '.')?></td>
+                              <td class="number"> <?=number_format($docsByResponsable['Nota de Débito']['SAC'], 0, ',', '.')?></td>
                               <td class="number"><?=number_format($docsByResponsable['Nota de Débito']['TLS'], 0, ',', '.')?></td>
                               <td class="number"> <?=number_format($docsByResponsable['Nota de Débito']['FASTCO'], 0, ',', '.')?></td>
-                              <td class="number"> <?=number_format($docsByResponsable['Nota de Débito']['SAC'], 0, ',', '.')?></td>
                             </tr>
                             <tr>
                               <th class="number">TOTAL</th>
+                              <th class="number"><?=number_format($totalLOG, 0, ',', '.')?></th>
+                              <th class="number"><?=number_format($totalSAC, 0, ',', '.')?></th>
                               <th class="number"><?=number_format($totalTLS, 0, ',', '.')?></th>
                               <th class="number"><?=number_format($totalFASTCO, 0, ',', '.')?></th>
-                              <th class="number"><?=number_format($totalSAC, 0, ',', '.')?></th>
                             </tr>
 
                         </tbody>
@@ -233,13 +238,13 @@
                               <td class="number"><?=number_format($totalFacturaEnProcesoDeRetorno, 0, ',', '.')?></td>
                               <td class="number"><?=calculate($totalFacturaEnProcesoDeRetorno, $docsByStatus['Factura'][3]['total']+$docsByStatus['Factura'][5]['total'])?> %</td>
                             </tr>
-                            <tr>
+                            <!-- tr>
                               <th>G. Despacho</th>
-                              <td class="number"><?=number_format($docsByStatus['G. Despacho'][3]['total']+$docsByStatus['G. Despacho'][5]['total'], 0, ',', '.')?></td>
-                              <td class="number"><?=number_format($totalGuiaEnProcesoDeRetorno, 0, ',', '.')?></td>
-                              <td class="number"><?=calculate($totalGuiaEnProcesoDeRetorno, $docsByStatus['G. Despacho'][3]['total']+$docsByStatus['G. Despacho'][5]['total'])?> %</td>
+                              <td class="number"><?//=number_format($docsByStatus['G. Despacho'][3]['total']+$docsByStatus['G. Despacho'][5]['total'], 0, ',', '.')?></td>
+                              <td class="number"><?//=number_format($totalGuiaEnProcesoDeRetorno, 0, ',', '.')?></td>
+                              <td class="number"><?//=calculate($totalGuiaEnProcesoDeRetorno, $docsByStatus['G. Despacho'][3]['total']+$docsByStatus['G. Despacho'][5]['total'])?> %</td>
 
-                            </tr>
+                            </tr-->
                             <tr>
                               <th>N. Crédito</th>
                               <td class="number"><?=number_format($docsByStatus['Nota de Crédito'][3]['total']+$docsByStatus['Nota de Crédito'][5]['total'], 0, ',', '.')?></td>
@@ -273,15 +278,15 @@
                           </div>
                         </div>
                       </div>
-                       <h4>G. Despacho</h4>
+                       <!-- h4>G. Despacho</h4>
 
                       <div class="w_center w_55">
                         <div class="progress">
-                          <div class="progress-bar bg-green" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: <?=calculate($totalGuiaEnProcesoDeRetorno, $docsByStatus['G. Despacho'][3]['total']+$docsByStatus['G. Despacho'][5]['total'])?>%;">
+                          <div class="progress-bar bg-green" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: <?//=calculate($totalGuiaEnProcesoDeRetorno, $docsByStatus['G. Despacho'][3]['total']+$docsByStatus['G. Despacho'][5]['total'])?>%;">
                             <span class="sr-only">60% Complete</span>
                           </div>
                         </div>
-                      </div>
+                      </div-->
                        <h4>Nota de Crédito</h4>
 
                       <div class="w_center w_55">
@@ -330,11 +335,11 @@
                             <td class="number"><?=number_format($docsByStatus['Factura'][3]['total'], 0, ',', '.')?></td>
                             <td class="number"><?=number_format($docsByStatus['Factura'][3]['monto'], 0, ',', '.')?></td>
                           </tr>
-                          <tr>
+                          <!--tr>
                             <th>G. Despacho</th>
-                            <td class="number"><?=number_format($docsByStatus['G. Despacho'][3]['total'], 0, ',', '.')?></td>
-                            <td class="number"> <?=number_format($docsByStatus['G. Despacho'][3]['monto'], 0, ',', '.')?></td>
-                          </tr>
+                            <td class="number"><?//=number_format($docsByStatus['G. Despacho'][3]['total'], 0, ',', '.')?></td>
+                            <td class="number"> <?//=number_format($docsByStatus['G. Despacho'][3]['monto'], 0, ',', '.')?></td>
+                          </tr-->
                           <tr>
                             <th>N. Crédito</th>
                             <td class="number"><?=number_format($docsByStatus['Nota de Crédito'][3]['total'], 0, ',', '.')?></td>
@@ -398,11 +403,11 @@
                             <td class="number"><?=number_format($docsByStatus['Factura'][5]['total'], 0, ',', '.')?></td>
                             <td class="number"><?=number_format($docsByStatus['Factura'][5]['monto'], 0, ',', '.')?></td>
                           </tr>
-                          <tr>
+                          <!--tr>
                             <th>G. Despacho</th>
-                            <td class="number"><?=number_format($docsByStatus['G. Despacho'][5]['total'], 0, ',', '.')?></td>
-                            <td class="number"> <?=number_format($docsByStatus['G. Despacho'][5]['monto'], 0, ',', '.')?></td>
-                          </tr>
+                            <td class="number"><?//=number_format($docsByStatus['G. Despacho'][5]['total'], 0, ',', '.')?></td>
+                            <td class="number"> <?//=number_format($docsByStatus['G. Despacho'][5]['monto'], 0, ',', '.')?></td>
+                          </tr-->
                           <tr>
                             <th>N. Crédito</th>
                             <td class="number"><?=number_format($docsByStatus['Nota de Crédito'][5]['total'], 0, ',', '.')?></td>
@@ -465,11 +470,11 @@
                             <td class="number"><?=number_format($docsByStatus['Factura'][0]['total'], 0, ',', '.')?></td>
                             <td class="number"><?=number_format($docsByStatus['Factura'][0]['monto'], 0, ',', '.')?></td>
                           </tr>
-                          <tr>
+                          <!--tr>
                             <th>G. Despacho</th>
-                            <td class="number"><?=number_format($docsByStatus['G. Despacho'][0]['total'], 0, ',', '.')?></td>
-                            <td class="number"> <?=number_format($docsByStatus['G. Despacho'][0]['monto'], 0, ',', '.')?></td>
-                          </tr>
+                            <td class="number"><?//=number_format($docsByStatus['G. Despacho'][0]['total'], 0, ',', '.')?></td>
+                            <td class="number"> <?//=number_format($docsByStatus['G. Despacho'][0]['monto'], 0, ',', '.')?></td>
+                          </tr-->
                           <tr>
                             <th>N. Crédito</th>
                             <td class="number"><?=number_format($docsByStatus['Nota de Crédito'][0]['total'], 0, ',', '.')?></td>
@@ -534,11 +539,11 @@
                             <td class="number"><?=number_format($docsByStatus['Factura'][4]['total'], 0, ',', '.')?></td>
                             <td class="number"><?=number_format($docsByStatus['Factura'][4]['monto'], 0, ',', '.')?></td>
                           </tr>
-                          <tr>
+                          <!--tr>
                             <th>G. Despacho</th>
-                            <td class="number"><?=number_format($docsByStatus['G. Despacho'][4]['total'], 0, ',', '.')?></td>
-                            <td class="number"> <?=number_format($docsByStatus['G. Despacho'][4]['monto'], 0, ',', '.')?></td>
-                          </tr>
+                            <td class="number"><?//=number_format($docsByStatus['G. Despacho'][4]['total'], 0, ',', '.')?></td>
+                            <td class="number"> <?//=number_format($docsByStatus['G. Despacho'][4]['monto'], 0, ',', '.')?></td>
+                          </tr-->
                           <tr>
                             <th>N. Crédito</th>
                             <td class="number"><?=number_format($docsByStatus['Nota de Crédito'][4]['total'], 0, ',', '.')?></td>
@@ -624,11 +629,11 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: [<?=$docsByStatus['Factura'][0]['total']?>,<?=$docsByStatus['G. Despacho'][0]['total']?>,<?=$docsByStatus['Nota de Crédito'][0]['total']?>,<?=$docsByStatus['Nota de Débito'][0]['total']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E',],
+                data: [<?=$docsByStatus['Factura'][0]['total']?>,<?=$docsByStatus['Nota de Crédito'][0]['total']?>,<?=$docsByStatus['Nota de Débito'][0]['total']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E',],
                 label: 'Dataset 1'
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"]
+            labels: ["Facturas","N. Crédito","N. Débito"]
         },
         options: {responsive:true,legend: {position: 'right', },
         }
@@ -642,10 +647,10 @@
         type: 'pie',
         data: {
             datasets: [{
-               data: [<?=$docsByStatus['Factura'][0]['monto']?>,<?=$docsByStatus['G. Despacho'][0]['monto']?>,<?=$docsByStatus['Nota de Crédito'][0]['monto']*-1?>,<?=$docsByStatus['Nota de Débito'][0]['monto']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'],
+               data: [<?=$docsByStatus['Factura'][0]['monto']?>,<?=$docsByStatus['Nota de Crédito'][0]['monto']*-1?>,<?=$docsByStatus['Nota de Débito'][0]['monto']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E'],
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"]
+            labels: ["Facturas","N. Crédito","N. Débito"]
         },
         options: {
         responsive:true,
@@ -663,10 +668,10 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: [<?=$docsByStatus['Factura'][4]['total']?>,<?=$docsByStatus['G. Despacho'][4]['total']?>,<?=$docsByStatus['Nota de Crédito'][4]['total']?>,<?=$docsByStatus['Nota de Débito'][4]['total']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'],
+                data: [<?=$docsByStatus['Factura'][4]['total']?>,<?=$docsByStatus['Nota de Crédito'][4]['total']?>,<?=$docsByStatus['Nota de Débito'][4]['total']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E'],
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"]
+            labels: ["Facturas","N. Crédito","N. Débito"]
         },
         options: {
         responsive:true,
@@ -684,10 +689,10 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: [<?=$docsByStatus['Factura'][4]['monto']?>,<?=$docsByStatus['G. Despacho'][4]['monto']?>,<?=$docsByStatus['Nota de Crédito'][4]['monto']?>,<?=$docsByStatus['Nota de Débito'][4]['monto']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'],
+                data: [<?=$docsByStatus['Factura'][4]['monto']?>,<?=$docsByStatus['Nota de Crédito'][4]['monto']?>,<?=$docsByStatus['Nota de Débito'][4]['monto']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E'],
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"],
+            labels: ["Facturas","N. Crédito","N. Débito"],
         },
         options: {
         responsive:true,
@@ -705,10 +710,10 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: [<?=$docsByStatus['Factura'][3]['total']?>,<?=$docsByStatus['G. Despacho'][3]['total']?>,<?=$docsByStatus['Nota de Crédito'][3]['total']?>,<?=$docsByStatus['Nota de Débito'][3]['total']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'],
+                data: [<?=$docsByStatus['Factura'][3]['total']?>,<?=$docsByStatus['Nota de Crédito'][3]['total']?>,<?=$docsByStatus['Nota de Débito'][3]['total']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E'],
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"],
+            labels: ["Facturas","N. Crédito","N. Débito"],
         },
         options: {
         responsive:true,
@@ -726,10 +731,10 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: [<?=$docsByStatus['Factura'][3]['monto']?>,<?=$docsByStatus['G. Despacho'][3]['monto']?>,<?=$docsByStatus['Nota de Crédito'][3]['monto']?>,<?=$docsByStatus['Nota de Débito'][3]['monto']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'],
+                data: [<?=$docsByStatus['Factura'][3]['monto']?>,<?=$docsByStatus['Nota de Crédito'][3]['monto']?>,<?=$docsByStatus['Nota de Débito'][3]['monto']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E'],
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"],
+            labels: ["Facturas","N. Crédito","N. Débito"],
         },
         options: {
         responsive:true,
@@ -747,10 +752,10 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: [<?=$docsByStatus['Factura'][5]['total']?>,<?=$docsByStatus['G. Despacho'][5]['total']?>,<?=$docsByStatus['Nota de Crédito'][5]['total']?>,<?=$docsByStatus['Nota de Débito'][5]['total']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'],
+                data: [<?=$docsByStatus['Factura'][5]['total']?>,<?=$docsByStatus['Nota de Crédito'][5]['total']?>,<?=$docsByStatus['Nota de Débito'][5]['total']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E'],
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"],
+            labels: ["Facturas","N. Crédito","N. Débito"],
         },
         options: {
         responsive:true,
@@ -768,10 +773,10 @@
         type: 'pie',
         data: {
            datasets: [{
-                data: [<?=$docsByStatus['Factura'][5]['monto']?>,<?=$docsByStatus['G. Despacho'][5]['monto']?>,<?=$docsByStatus['Nota de Crédito'][5]['monto']?>,<?=$docsByStatus['Nota de Débito'][5]['monto']?>],
-                backgroundColor: ['#58D68D','#CACFD2','#FAD7A0','#85929E'],
+                data: [<?=$docsByStatus['Factura'][5]['monto']?>,<?=$docsByStatus['Nota de Crédito'][5]['monto']?>,<?=$docsByStatus['Nota de Débito'][5]['monto']?>],
+                backgroundColor: ['#58D68D','#FAD7A0','#85929E'],
             }],
-            labels: ["Facturas","N. Crédito","N. Débito","G. Despacho"],
+            labels: ["Facturas","N. Crédito","N. Débito"],
         },
         options: {
         responsive:true,
@@ -788,34 +793,38 @@
     var g9 = new Chart(ctx9,{
         type: 'bar',
         data: {
-           labels: ["TLS","FASTCO","SAC"],
+           labels: ["LOGISTICA","SAC","TLS","FASTCO"],
            datasets: [{
                 label: 'Facturas',
                 backgroundColor:"#58D68D",
                 borderWidth: 1,
                 data: [
+<?=$docsByResponsable['Factura']['LOGISTICA']?>,
+<?=$docsByResponsable['Factura']['SAC']?>, 
 <?=$docsByResponsable['Factura']['TLS']?>,
 <?=$docsByResponsable['Factura']['FASTCO']?>,
-<?=$docsByResponsable['Factura']['SAC']?>
 ]
-            }, {
+            },/* {
                 label: 'G. Despacho',
                 backgroundColor: "#CACFD2",
                 borderWidth: 1,
                 data: [
-<?=$docsByResponsable['G. Despacho']['TLS']?>,
-<?=$docsByResponsable['G. Despacho']['FASTCO']?>,
-<?=$docsByResponsable['G. Despacho']['SAC']?>
+
+<?//=$docsByResponsable['G. Despacho']['LOGISTICA']?>
+<?//=$docsByResponsable['G. Despacho']['SAC']?>
+<?//=$docsByResponsable['G. Despacho']['TLS']?>,
+<?//=$docsByResponsable['G. Despacho']['FASTCO']?>,
 ]
-            },
+            },*/
              {
                 label: 'N. Crédito',
                 backgroundColor: "#FAD7A0",
                 borderWidth: 1,
                 data: [
+<?=$docsByResponsable['Nota de Crédito']['LOGISTICA']?>,
+<?=$docsByResponsable['Nota de Crédito']['SAC']?>,
 <?=$docsByResponsable['Nota de Crédito']['TLS']?>,
 <?=$docsByResponsable['Nota de Crédito']['FASTCO']?>,
-<?=$docsByResponsable['Nota de Crédito']['SAC']?>
 ]
             },
             {
@@ -823,9 +832,10 @@
                 backgroundColor: "#85929E",
                 borderWidth: 1,
                 data: [
+<?=$docsByResponsable['Nota de Débito']['LOGISTICA']?>,
+<?=$docsByResponsable['Nota de Débito']['SAC']?>,
 <?=$docsByResponsable['Nota de Débito']['TLS']?>,
 <?=$docsByResponsable['Nota de Débito']['FASTCO']?>,
-<?=$docsByResponsable['Nota de Débito']['SAC']?>
 ]
             }]
         },

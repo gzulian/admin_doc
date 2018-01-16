@@ -99,7 +99,7 @@ class Report extends CI_Controller {
 		$data['active']    = "dashboard";
 		$data['user']      = $this->session->userdata('logged_in');
 		$data['documents'] = array();
-
+		$this->load->helper('caculate');
 		if (isset($_POST['filter'])) {
 			$this->db->select("rrf_document.*", false);
 			$this->db->from("rrf_document");
@@ -113,9 +113,13 @@ class Report extends CI_Controller {
 					$from = dinamicMakeDate($_POST['filter']['from']);
 					$to   = dinamicMakeDate($_POST['filter']['to']);
 					if (!is_null($from) && !is_null($to) && $from <= $to) {
-						$this->db->where("doc_documentdate>=", $from->format('Y-m-d'));
-						$this->db->where("doc_documentdate<=", $to->format('Y-m-d'));
+						$this->db->where("doc_facdate>=", $from->format('Y-m-d'));
+						$this->db->where("doc_facdate<=", $to->format('Y-m-d'));
 					}
+					$now = date('Y-m-d');
+
+					$this->db->where('doc_datelogtosacstimated<=',$now );
+					$this->db->where('doc_status',0);
 				}
 			}
 			$result = $this->db->get();
@@ -128,6 +132,8 @@ class Report extends CI_Controller {
 		}
 
 		//$data['documents'] = array();
+  		$this->load->model('Holiday_model','holiday');
+		$data['holidays']  = $this->holiday->findAll(array(), true);
 		$this->load->view('header', $data);
 		$this->load->view('return_report', $data);
 		$this->load->view('footer', $data);

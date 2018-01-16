@@ -29,21 +29,18 @@ class User extends CI_Controller {
 		}
 	}
 	public function  save(){
-		
 		if(isset($_REQUEST['profile']) &&  isset($_REQUEST['userData'])){
 			$formData['userData'] = $_REQUEST['userData']; 
 			$formData['profiles'] = $_REQUEST['profile']; 
+			if(isset($formData['userData']['use_id']) && !empty($formData['userData']['use_id']) &&  is_numeric($formData['userData']['use_id'])){
+				$user  = $this->User_model->findById($formData['userData']['use_id']);
 			
-			if(!isset($formData['userData']['use_id']) && !empty($formData['userData']['use_id']) &&  is_numeric($formData['userData']['use_id'])){
-				$user  = $this->user->findById($formData['userData']['use_id']);
-
 			}else{
 				$user  = $this->User_model->create($formData['userData']);
-				
 			}   
 			$emptyColumns  = $user->validate();
 			$response = array();
-			if(count($emptyColumns)  > 0 ){
+			if(count($emptyColumns)  == 0 ){
 				if(count($formData['profiles'])  > 0) 
 				{
 					if($user->isNew()){

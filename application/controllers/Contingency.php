@@ -66,15 +66,24 @@ class Contingency extends CI_Controller {
 			echo json_encode($response);
 		}
 	}
-	public function saveMotive($id)
+	public function saveMotive()
 	{
-		if (!is_null($id) &&  is_numeric($id) ) {
-			
-			$result = $this->db->get_where('rrf_motive',array('mot_id'=>$id));
-			$data  = $result->row_object();
-			$response['motive']     = get_object_vars($data); 
-			echo json_encode($response);
+		
+		if (isset($_REQUEST['motData']) && count(array_filter($_REQUEST['motData'])) >   0   ) {
+			if(isset($_REQUEST['motData']['mot_id']) && !empty(trim($_REQUEST['motData']['mot_id'])) && is_numeric($_REQUEST['motData']['mot_id'])){
+				$this->db->where('mot_id', $_REQUEST['motData']['mot_id']);
+				$this->db->update('rrf_motive', $_REQUEST['motData']);
+				$response['success'] = "Registro actualizado con éxito ";
+			}else{
+				$this->db->insert('rrf_motive',$_REQUEST['motData']);
+				$response['success'] = "Registro creado con éxito ";
+
+			}
+
+		}else {
+			$response['error'] = "Error al crear el registro ";
 		}
+		echo json_encode($response);
 	}
 	public function findResponsible($id)
 	{
@@ -85,6 +94,24 @@ class Contingency extends CI_Controller {
 			$response['responsible']     = get_object_vars($data); 
 			echo json_encode($response);
 		}
+	}
+	public function saveResponsible()
+	{
+		if (isset($_REQUEST['resData']) && count(array_filter($_REQUEST['resData'])) >   0   ) {
+			if(isset($_REQUEST['resData']['res_id']) && !empty(trim($_REQUEST['resData']['res_id'])) && is_numeric($_REQUEST['resData']['res_id'])){
+				$this->db->where('res_id', $_REQUEST['resData']['res_id']);
+				$this->db->update('rrf_responsable', $_REQUEST['resData']);
+				$response['success'] = "Registro actualizado con éxito ";
+			}else{
+				$this->db->insert('rrf_responsable',$_REQUEST['resData']);
+				$response['success'] = "Registro creado con éxito ";
+
+			}
+
+		}else {
+			$response['error'] = "Error al crear el registro ";
+		}
+		echo json_encode($response);
 	}
 
 }

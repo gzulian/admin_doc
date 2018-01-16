@@ -28,6 +28,7 @@
                       <tr>
                         <th>#</th>
                         <th>Descripción</th>
+                        <th>Estado</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -37,6 +38,7 @@
                         <tr>
                           <td><?=$responsible->res_id?></td>
                           <td><?=$responsible->res_name?></td>
+                          <td><?=($responsible->res_status == 1)? "HABILITADO" : "INHABILITADO";?></td>
                           <td><button data-target='#viewUser' data-toggle='modal' type="button" class="edit btn btn-xs btn-info" id="<?=$responsible->res_id?>"><span class="glyphicon glyphicon-edit"></span></button></td>
                         </tr>
 <?php endforeach?>
@@ -64,7 +66,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="col-md-2" for="name">Descripción</label>
-                          <input class="form-control" type="text" name="motData[res_name]" id="name">
+                          <input class="form-control" type="text" name="resData[res_name]" id="name">
                         </div>
                       </div>
                     </div>
@@ -72,7 +74,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="col-md-2" for="name">Estado</label>
-                          <select name="motData[res_status]" id="status" class="form-control">
+                          <select name="resData[res_status]" id="status" class="form-control">
                             <option value="0">INHABILITADO</option>
                             <option value="1">HABILITADO</option>
                           </select>
@@ -86,7 +88,7 @@
                     </div>
                     <!-- button title="Reset" type="button" id="reset" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-repeat"></span> Reinicar clave</button -->
                     <button title="Guardar" type="submit" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></button>
-                    <input id="id" type="hidden" name="motData[res_id]" value="">
+                    <input id="id" type="hidden" name="resData[res_id]" value="">
                   </form>
               </div>
             </div>
@@ -162,7 +164,7 @@
 
          return false;
       });
-      $(".edit").click(function(){
+      $(document).on('click','.edit',function(){
         var id = $(this).attr("id");
         if(typeof id != 'undefined'){
           $('.check').prop("checked",false); 
