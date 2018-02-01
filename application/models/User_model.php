@@ -126,14 +126,19 @@ class User_model extends CI_Model {
 		$result   = $this->db->get_where("rrf_user", array('use_email' => $this->_columns['use_email']));
 		return $result->num_rows() > 0;
 	}
+
 	public function validateEmail($email) {
 		$result   = $this->db->get_where("rrf_user", array('use_email' => $email));
-		$data     = $result->row_object();
+		if($result->num_rows() > 0){
+			$data     = $result->row_object();
+		}else{
+			return true;
+		}
 		return $data->use_id  == $this->_columns['use_id'];
 
 		
 
-		return $result->num_rows() > 0;
+		
 	}
 	public function getPermissionArray() {
 		//$result   = $this->db->get_where("rrf_permission", array('perm_use_id' => $this->_columns['use_id']));

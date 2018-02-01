@@ -98,7 +98,7 @@ class User extends CI_Controller {
 				if(count($formData['profiles'])  > 0) 
 				{
 					if($user->isNew()){
-						$user->set('use_password',sha1(123));
+						$user->set('use_password',sha1(123456));
 						if($user->exist()){
 							$response['errors']   = "El correo ingresado ya está registrado"; 
 							echo json_encode($response);
