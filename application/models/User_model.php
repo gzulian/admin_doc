@@ -31,10 +31,10 @@ class User_model extends CI_Model {
 	public function getRequired() {
 		$requiredFields = array(
 			'use_name',
-			'use_status',
+			//'use_status',
 			'use_email',
-			'use_prof_id',
-			'use_password',
+			//'use_prof_id',
+			//'use_password',
 		);
 		return $requiredFields;
 	}
@@ -138,7 +138,7 @@ class User_model extends CI_Model {
 	public function getPermissionArray() {
 		//$result   = $this->db->get_where("rrf_permission", array('perm_use_id' => $this->_columns['use_id']));
 
-		$this->db->select('prof_id,prof_name');
+		$this->db->select('distinct prof_id,prof_name',false);
 		$this->db->from('rrf_profile');
 		$this->db->join('rrf_permission', 'prof_id  = perm_pro_id', 'inner');
 		$this->db->where('perm_use_id',$this->_columns['use_id']);

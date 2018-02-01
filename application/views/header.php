@@ -103,6 +103,9 @@
               <a data-toggle="tooltip" data-placement="top" href="<?=site_url('login/logout')?>" title="Logout">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
+              <a data-toggle="tooltip" data-placement="top" href="<?=site_url('user/profile')?>" title="Perfil">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              </a>
             </div>
             <!-- /menu footer buttons -->
           </div>
